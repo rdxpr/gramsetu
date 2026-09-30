@@ -5,11 +5,17 @@ career quiz, mentor booking. All content is trilingual (hi/en/hinglish) and
 plain text so it stays usable offline and on low bandwidth.
 """
 
+from pathlib import Path
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from .seed import CAREERS, COURSES, DOUBTS, MENTORS, SCHOLARSHIPS
+
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
 
 app = FastAPI(title="GramSetu API", version="0.1.0")
 app.add_middleware(
@@ -56,6 +62,19 @@ class BookingIn(BaseModel):
 @app.get("/api/health")
 def health():
     return {"ok": True, "service": "gramsetu"}
+
+
+@app.get("/", include_in_schema=False)
+def index():
+    return FileResponse(FRONTEND_DIR / "index.html")
+
+
+@app.get("/index.html", include_in_schema=False)
+def index_html():
+    return FileResponse(FRONTEND_DIR / "index.html")
+
+
+app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 
 
 @app.get("/api/courses")
