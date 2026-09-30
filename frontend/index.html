@@ -60,10 +60,12 @@ section.block{padding:30px 0}
 .sec-head h2{font-size:28px;letter-spacing:-.02em;margin:0 0 6px}
 .sec-head p{color:var(--muted);margin:0 0 16px;max-width:62ch;line-height:1.6}
 /* UDEMY-STYLE COURSE CARDS */
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:stretch}
 .grid2{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:14px;align-items:start}
-#schOut{display:flex;flex-direction:column;gap:10px;min-width:0}
-#schOut .card{margin:0}
+.grid2>.card:first-child{position:sticky;top:76px}
+#schOut{display:flex;flex-direction:column;gap:10px;min-width:0;max-height:560px;overflow-y:auto;padding-right:4px;scrollbar-width:thin}
+#schOut .card{margin:0;flex:0 0 auto}
+.course-body .prow{margin-top:auto}
 .sch-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start;margin-top:14px}
 .sch-grid details{align-self:start;margin:0}
 .career-ico{width:44px;height:44px;border-radius:12px;background:#eef4ec;border:1px solid #cfdfcd;display:grid;place-items:center;margin-bottom:2px}
@@ -120,6 +122,8 @@ summary{font-weight:700;cursor:pointer}
   .hero{grid-template-columns:1fr;padding-top:22px}
   h1{font-size:32px}
   .grid3,.grid2,.lesson-grid,.sch-grid{grid-template-columns:1fr}
+  .grid2>.card:first-child{position:static}
+  #schOut{max-height:420px}
   .nav-links{display:none}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -155,10 +159,10 @@ summary{font-weight:700;cursor:pointer}
       <div class="trust"><span><b>3</b> <span data-t="t1">courses offline</span></span><span><b>6</b> <span data-t="t2">MP scholarships</span></span><span><b>&lt;20KB</b> <span data-t="t3">prati lesson</span></span></div>
     </div>
     <div class="hero-art">
-      <h4>Sarthi live demo</h4>
-      <div class="sub2">Bolo ya likho, jawab turant</div>
-      <div class="demo-row"><span class="demo-play">▶</span><span><small>Physics, Class 12</small><b>Gati kya hai? Jab vastu jagah badle...</b></span></div>
-      <div class="demo-row"><span class="demo-play">▶</span><span><small>Scholarship</small><b>MMVY: 12th me 70% + aay 6L tak, poori fees</b></span></div>
+      <h4 data-t="demoH">Sarthi live demo</h4>
+      <div class="sub2" data-t="demoS">Bolo ya likho, jawab turant</div>
+      <div class="demo-row"><span class="demo-play">▶</span><span><small data-t="demo1a">Physics, Class 12</small><b data-t="demo1b">Gati kya hai? Jab vastu jagah badle...</b></span></div>
+      <div class="demo-row"><span class="demo-play">▶</span><span><small data-t="demo2a">Scholarship</small><b data-t="demo2b">MMVY: 12th me 70% + aay 6L tak, poori fees</b></span></div>
       <div class="voicebar"><input id="heroQ" placeholder="Sawal bolo ya likho..."><button class="mic" onclick="micHero()" title="Bolo">🎙</button><button class="send" onclick="askHero()" title="Puchho">➤</button></div>
       <div class="hero-answ" id="heroA" style="display:none"></div>
     </div>
@@ -177,8 +181,8 @@ summary{font-weight:700;cursor:pointer}
     <p data-t="doubtP">Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.</p></div>
     <div class="card">
       <div class="row"><input id="doubtQ" placeholder="Apna sawal likho, jaise: Newton ka niyam kya hai?"><button class="btn btn-primary" onclick="askDoubt()" data-t="ask">Puchho</button>
-      <button class="btn btn-sun" id="micBtn" onclick="speak()" title="Bolkar puchho">🎙 Bolo</button>
-      <button class="btn btn-ghost" id="hearBtn" onclick="hear()" style="display:none">🔊 Suno</button></div>
+      <button class="btn btn-sun" id="micBtn" onclick="speak()" title="Bolkar puchho">🎙 <span data-t="mic">Bolo</span></button>
+      <button class="btn btn-ghost" id="hearBtn" onclick="hear()" style="display:none">🔊 <span data-t="hear">Suno</span></button></div>
       <div class="answer" id="doubtA" style="display:none"></div>
     </div>
   </section>
@@ -194,8 +198,8 @@ summary{font-weight:700;cursor:pointer}
         <label data-t="fInc">Parivar ki saalana aay (lakh me)</label><input id="fInc" type="number" value="2">
         <label>Category</label><select id="fCat" class="langsel" style="width:100%"><option value="general">General</option><option value="sc">SC</option><option value="st">ST</option><option value="obc">OBC</option></select>
         <div class="row" style="margin-top:12px">
-          <select id="fGen" class="langsel"><option value="">Gender</option><option value="female">Beti</option><option value="male">Beta</option></select>
-          <button class="quiz-opt" id="fRural" onclick="this.classList.toggle('on')">Grameen</button>
+          <select id="fGen" class="langsel"><option value="" data-t="gAny">Gender</option><option value="female" data-t="gGirl">Beti</option><option value="male" data-t="gBoy">Beta</option></select>
+          <button class="quiz-opt" id="fRural" onclick="this.classList.toggle('on')" data-t="rural">Grameen</button>
           <button class="btn btn-primary" onclick="checkSch()" data-t="check">Check karo</button>
         </div>
       </div>
@@ -257,12 +261,15 @@ summary{font-weight:700;cursor:pointer}
 <div class="toast" id="toast"></div>
 <script>
 const API = "";
-let LANG = localStorage.getItem("gs-lang") || "hi";
+const QPARAMS = new URLSearchParams(location.search);
+let LANG = QPARAMS.get("lang") || localStorage.getItem("gs-lang") || "hi";
+if(!["hi","hinglish","en"].includes(LANG)) LANG="hi";
+localStorage.setItem("gs-lang",LANG);
 document.getElementById("lang").value = LANG;
 const T = {
- hi:{navCourses:"पढ़ाई",navDoubt:"सारथी से पूछो",navScholar:"छात्रवृत्ति",navCareer:"करियर",navMentor:"मेंटोर",kicker:"MP ke grameen students ke liye",h1a:"Bina internet rukawat ke,",h1b:"apni bhasha me padhai.",sub:"Offline-first lessons, bolkar sawal puchhne wala AI Sarthi, scholarship checker aur career roadmap. 2G par bhi chale, Hindi, Hinglish aur English me.",cta1:"Muft padhai shuru karo",cta2:"Scholarship check karo",t1:"courses offline",t2:"MP scholarships",t3:"prati lesson",coursesH:"Offline-first padhai",coursesP:"Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota hai aur phone me save rehta hai. Tasveer wale diagram ke saath, video aane par yahi player video bhi dikhayega.",doubtH:"Sarthi se puchho",doubtP:"Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.",ask:"Puchho",schH:"Kaunsi scholarship milegi?",schP:"Apne number aur parivar ki sthiti batao. Hum 6 MP sarkari yojnaon me eligibility turant batayenge, sath me kagaz ki list.",fPct:"12vi me kitne %?",fInc:"Parivar ki saalana aay (lakh me)",check:"Check karo",schHint:"Left me jankari bharo, yahan natija aayega.",carH:"12vi ke baad kya?",carP:"Apni ruchi chuno, hum MP ke liye sahi 3 raste sujhayenge.",suggest:"Raste dikhao",menH:"Digital mentoring",menP:"MP ke hi didi-bhaiya se baat karo. Naam aur vishay likho, booking pakki.",back:"Wapas"},
- hinglish:{navCourses:"Padhai",navDoubt:"Sarthi se puchho",navScholar:"Scholarship",navCareer:"Career",navMentor:"Mentor",kicker:"MP ke rural students ke liye",h1a:"Bina internet rukawat ke,",h1b:"apni bhasha me padhai.",sub:"Offline-first lessons, bolkar sawal puchhne wala AI Sarthi, scholarship checker aur career roadmap. 2G par bhi chale, Hindi, Hinglish aur English me.",cta1:"Free padhai start karo",cta2:"Scholarship check karo",t1:"courses offline",t2:"MP scholarships",t3:"per lesson",coursesH:"Offline-first padhai",coursesP:"Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota, phone me save rehta hai. Diagram ke saath, video aane par yahi player video bhi dikhayega.",doubtH:"Sarthi se puchho",doubtP:"Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.",ask:"Puchho",schH:"Kaunsi scholarship milegi?",schP:"Apne marks aur family situation batao. 6 MP sarkari schemes me eligibility turant, documents list ke saath.",fPct:"12th me kitne %?",fInc:"Family yearly income (lakh me)",check:"Check karo",schHint:"Left me details bharo, result yahan aayega.",carH:"12th ke baad kya?",carP:"Apni interest chuno, MP ke liye best 3 options payo.",suggest:"Options dikhao",menH:"Digital mentoring",menP:"MP ke seniors se baat karo. Naam aur topic likho, booking done.",back:"Wapas"},
- en:{navCourses:"Courses",navDoubt:"Ask Sarthi",navScholar:"Scholarships",navCareer:"Careers",navMentor:"Mentors",kicker:"For rural MP students",h1a:"Study without internet breaks,",h1b:"in your own language.",sub:"Offline-first lessons, voice AI Sarthi for doubts, scholarship checker and career roadmaps. Works on 2G, in Hindi, Hinglish and English.",cta1:"Start learning free",cta2:"Check scholarship",t1:"courses offline",t2:"MP scholarships",t3:"per lesson",coursesH:"Offline-first learning",coursesP:"Open once, study without internet after. Every lesson under 20KB, saved on the phone. With picture diagrams today, the same player will show video when it arrives.",doubtH:"Ask Sarthi",doubtP:"Physics, Maths, English, scholarships or careers. Tap mic, speak, and listen to the answer.",ask:"Ask",schH:"Which scholarship fits you?",schP:"Tell us your marks and family situation. Instant eligibility across 6 MP schemes, with document lists.",fPct:"Class 12 %?",fInc:"Family yearly income (in lakh)",check:"Check",schHint:"Fill details on the left, results appear here.",carH:"What after Class 12?",carP:"Pick your interests, get 3 right paths for MP.",suggest:"Show paths",menH:"Digital mentoring",menP:"Talk to seniors from MP. Write name and topic, booking confirmed.",back:"Back"}
+ hi:{navCourses:"पढ़ाई",navDoubt:"सारथी से पूछो",navScholar:"छात्रवृत्ति",navCareer:"करियर",navMentor:"मेंटोर",kicker:"MP ke grameen students ke liye",h1a:"Bina internet rukawat ke,",h1b:"apni bhasha me padhai.",sub:"Offline-first lessons, bolkar sawal puchhne wala AI Sarthi, scholarship checker aur career roadmap. 2G par bhi chale, Hindi, Hinglish aur English me.",cta1:"Muft padhai shuru karo",cta2:"Scholarship check karo",demoH:"Sarthi live demo",demoS:"Bolo ya likho, jawab turant",demo1a:"Physics, Class 12",demo1b:"Gati kya hai? Jab vastu jagah badle...",demo2a:"Scholarship",demo2b:"MMVY: 12th me 70% + aay 6L tak, poori fees",t1:"courses offline",t2:"MP scholarships",t3:"prati lesson",coursesH:"Offline-first padhai",coursesP:"Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota hai aur phone me save rehta hai. Tasveer wale diagram ke saath, video aane par yahi player video bhi dikhayega.",doubtH:"Sarthi se puchho",doubtP:"Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.",ask:"Puchho",mic:"Bolo",hear:"Suno",dPh:"Apna sawal likho, jaise: Newton ka niyam kya hai?",hPh:"Sawal bolo ya likho...",micTip:"Bolkar puchho",start:"Shuru karo",cont:"Jari rakho",syl:"Pathyakram",doneBtn:"✓ Yaad ho gaya",doneAll:"✓ Poora ho gaya",prevBtn:"← Pichhla",nextBtn:"Agla →",hearBtn:"🔊 Suno",gAny:"Gender",gGirl:"Beti",gBoy:"Beta",rural:"Grameen",schH:"Kaunsi scholarship milegi?",schP:"Apne number aur parivar ki sthiti batao. Hum 6 MP sarkari yojnaon me eligibility turant batayenge, sath me kagaz ki list.",fPct:"12vi me kitne %?",fInc:"Parivar ki saalana aay (lakh me)",check:"Check karo",schHint:"Left me jankari bharo, yahan natija aayega.",carH:"12vi ke baad kya?",carP:"Apni ruchi chuno, hum MP ke liye sahi 3 raste sujhayenge.",suggest:"Raste dikhao",menH:"Digital mentoring",menP:"MP ke hi didi-bhaiya se baat karo. Naam aur vishay likho, booking pakki.",back:"Wapas",top1:"Sabse sahi",topN:"Vikalp",mName:"Apna naam",mNamePh:"Naam",mTopic:"Kis vishay par?",mTopicPh:"jaise: ITI me admission",mBook:"Booking pakki karo",tNoCache:"Lesson cache me nahi, online kholo",tDone:"Shabash! Progress save ho gaya",tReopen:"Wapas khol diya",tNoVoice:"Is browser me voice nahi, likhkar puchho",tListen:"Bolo, sun rahe hain...",tNoVoiceSup:"Voice support nahi",tNoServer:"Server se sampark nahi ho raha",tPickInt:"Pehle 1-2 ruchi chuno",tNeedBoth:"Naam aur vishay likho",tBooked:"Booking pakki!"},
+ hinglish:{navCourses:"Padhai",navDoubt:"Sarthi se puchho",navScholar:"Scholarship",navCareer:"Career",navMentor:"Mentor",kicker:"MP ke rural students ke liye",h1a:"Bina internet rukawat ke,",h1b:"apni bhasha me padhai.",sub:"Offline-first lessons, bolkar sawal puchhne wala AI Sarthi, scholarship checker aur career roadmap. 2G par bhi chale, Hindi, Hinglish aur English me.",cta1:"Free padhai start karo",cta2:"Scholarship check karo",demoH:"Sarthi live demo",demoS:"Bolo ya likho, jawab turant",demo1a:"Physics, Class 12",demo1b:"Gati kya hai? Jab vastu jagah badle...",demo2a:"Scholarship",demo2b:"MMVY: 12th me 70% + income 6L tak, full fees",t1:"courses offline",t2:"MP scholarships",t3:"per lesson",coursesH:"Offline-first padhai",coursesP:"Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota, phone me save rehta hai. Diagram ke saath, video aane par yahi player video bhi dikhayega.",doubtH:"Sarthi se puchho",doubtP:"Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.",ask:"Puchho",mic:"Bolo",hear:"Suno",dPh:"Apna question likho, jaise: Newton ka law kya hai?",hPh:"Sawal bolo ya likho...",micTip:"Bolkar puchho",start:"Start karo",cont:"Jari rakho",syl:"Syllabus",doneBtn:"✓ Yaad ho gaya",doneAll:"✓ Poora ho gaya",prevBtn:"← Pichhla",nextBtn:"Agla →",hearBtn:"🔊 Suno",gAny:"Gender",gGirl:"Beti",gBoy:"Beta",rural:"Grameen",schH:"Kaunsi scholarship milegi?",schP:"Apne marks aur family situation batao. 6 MP sarkari schemes me eligibility turant, documents list ke saath.",fPct:"12th me kitne %?",fInc:"Family yearly income (lakh me)",check:"Check karo",schHint:"Left me details bharo, result yahan aayega.",carH:"12th ke baad kya?",carP:"Apni interest chuno, MP ke liye best 3 options payo.",suggest:"Options dikhao",menH:"Digital mentoring",menP:"MP ke seniors se baat karo. Naam aur topic likho, booking done.",back:"Wapas",top1:"Sabse sahi",topN:"Vikalp",mName:"Apna naam",mNamePh:"Naam",mTopic:"Kis vishay par?",mTopicPh:"jaise: ITI me admission",mBook:"Booking pakki karo",tNoCache:"Lesson cache me nahi, online kholo",tDone:"Shabash! Progress save ho gaya",tReopen:"Wapas khol diya",tNoVoice:"Is browser me voice nahi, likhkar puchho",tListen:"Bolo, sun rahe hain...",tNoVoiceSup:"Voice support nahi",tNoServer:"Server se sampark nahi ho raha",tPickInt:"Pehle 1-2 ruchi chuno",tNeedBoth:"Naam aur vishay likho",tBooked:"Booking pakki!"},
+ en:{navCourses:"Courses",navDoubt:"Ask Sarthi",navScholar:"Scholarships",navCareer:"Careers",navMentor:"Mentors",kicker:"For rural MP students",h1a:"Study without internet breaks,",h1b:"in your own language.",sub:"Offline-first lessons, voice AI Sarthi for doubts, scholarship checker and career roadmaps. Works on 2G, in Hindi, Hinglish and English.",cta1:"Start learning free",cta2:"Check scholarship",demoH:"Sarthi live demo",demoS:"Type or speak, instant answer",demo1a:"Physics, Class 12",demo1b:"What is motion? When a body changes place...",demo2a:"Scholarship",demo2b:"MMVY: 70% in 12th + income to 6L, full fees",t1:"courses offline",t2:"MP scholarships",t3:"per lesson",coursesH:"Offline-first learning",coursesP:"Open once, study without internet after. Every lesson under 20KB, saved on the phone. With picture diagrams today, the same player will show video when it arrives.",doubtH:"Ask Sarthi",doubtP:"Physics, Maths, English, scholarships or careers. Tap mic, speak, and listen to the answer.",ask:"Ask",mic:"Speak",hear:"Listen",dPh:"Type your question, e.g. What is Newton's law?",hPh:"Type or speak your question...",micTip:"Ask by voice",start:"Start",cont:"Continue",syl:"Syllabus",doneBtn:"✓ Got it",doneAll:"✓ Completed",prevBtn:"← Previous",nextBtn:"Next →",hearBtn:"🔊 Listen",gAny:"Any gender",gGirl:"Female",gBoy:"Male",rural:"Rural",schH:"Which scholarship fits you?",schP:"Tell us your marks and family situation. Instant eligibility across 6 MP schemes, with document lists.",fPct:"Class 12 %?",fInc:"Family yearly income (in lakh)",check:"Check",schHint:"Fill details on the left, results appear here.",carH:"What after Class 12?",carP:"Pick your interests, get 3 right paths for MP.",suggest:"Show paths",menH:"Digital mentoring",menP:"Talk to seniors from MP. Write name and topic, booking confirmed.",back:"Back",top1:"Best match",topN:"Option",mName:"Your name",mNamePh:"Name",mTopic:"Which topic?",mTopicPh:"e.g. ITI admission",mBook:"Confirm booking",tNoCache:"Lesson not cached, open online",tDone:"Great! Progress saved",tReopen:"Reopened",tNoVoice:"No voice in this browser, type instead",tListen:"Speak, listening...",tNoVoiceSup:"No voice support",tNoServer:"Cannot reach server",tPickInt:"Pick 1-2 interests first",tNeedBoth:"Write name and topic",tBooked:"Booking confirmed!"}
 };
 let SARTHI_MODE="offline";
 async function sarthiStatus(){try{const s=await jget("/api/doubt/status");SARTHI_MODE=s.mode||"offline"}catch(e){}}
@@ -271,7 +278,7 @@ function toast(m){const t=document.getElementById("toast");t.textContent=m;t.sty
 function setNet(){const p=document.getElementById("netpill");const off=!navigator.onLine;p.textContent=off?"● Offline, saved content chalega":"● Online";p.classList.toggle("off",off)}
 window.addEventListener("online",setNet);window.addEventListener("offline",setNet);setNet();
 document.getElementById("lang").onchange=e=>{LANG=e.target.value;localStorage.setItem("gs-lang",LANG);applyT();loadAll()};
-function applyT(){document.querySelectorAll("[data-t]").forEach(el=>{const k=el.dataset.t;if(T[LANG][k])el.textContent=T[LANG][k]})}
+function applyT(){document.querySelectorAll("[data-t]").forEach(el=>{const k=el.dataset.t;if(T[LANG][k])el.textContent=T[LANG][k]});const t=T[LANG];const dq=document.getElementById("doubtQ");if(dq&&t.dPh)dq.placeholder=t.dPh;const hq=document.getElementById("heroQ");if(hq&&t.hPh)hq.placeholder=t.hPh;const mb=document.getElementById("micBtn");if(mb&&t.micTip)mb.title=t.micTip}
 async function jget(p){const r=await fetch(API+p);return r.json()}
 async function jpost(p,b){const r=await fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)});return r.json()}
 function cache(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -327,8 +334,8 @@ async function loadCourses(){
   +`<span class="chip">${c.subject} · Class ${c.level}</span><h3>${c.title}</h3><p class="desc">${c.desc}</p>`
   +`<div class="course-meta">${c.lessons.length} lessons · ${totalMin} min · ${totalKb}KB total</div>`
   +`<div class="prow"><div class="pbar" style="flex:1"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>`
-  +`<div class="row"><button class="btn btn-primary" onclick="openLesson('${next.id}')">${ndone?"Jari rakho":"Shuru karo"}</button>`
-  +`<button class="btn btn-ghost" onclick="openCourseList('${c.id}')">Pathyakram</button></div></div></div>`;
+  +`<div class="row"><button class="btn btn-primary" onclick="openLesson('${next.id}')">${ndone?T[LANG].cont:T[LANG].start}</button>`
+  +`<button class="btn btn-ghost" onclick="openCourseList('${c.id}')">${T[LANG].syl}</button></div></div></div>`;
  }).join("");
 }
 function openCourseList(cid){
@@ -343,7 +350,7 @@ async function openLesson(id){
  if(c) V_LIST=c.lessons.map(l=>l.id);
  let d=uncache("gs-lesson-"+id+"-"+LANG);
  try{d=await jget("/api/lesson/"+id+"?lang="+LANG);cache("gs-lesson-"+id+"-"+LANG,d)}catch(e){}
- if(!d||d.error){toast("Lesson cache me nahi, online kholo");return}
+ if(!d||d.error){toast(T[LANG].tNoCache);return}
  V_LESSON=d;
  renderViewer();
  document.getElementById("viewer").classList.add("open");
@@ -363,7 +370,10 @@ function renderViewer(){
  document.getElementById("vArt").innerHTML=artFor(d.art||d.id);
  document.getElementById("vPoints").innerHTML=(d.points||[]).map(p=>`<li>${p}</li>`).join("");
  document.getElementById("vData").textContent="Text + diagram: "+d.size_kb+"KB. Video aane par yahi player video dikhayega, text fallback bana rahega.";
- document.getElementById("vDone").textContent=done[d.id]?"✓ Poora ho gaya":"✓ Yaad ho gaya";
+ document.getElementById("vDone").textContent=done[d.id]?T[LANG].doneAll:T[LANG].doneBtn;
+ document.getElementById("vHear").textContent=T[LANG].hearBtn;
+ document.getElementById("vPrev").textContent=T[LANG].prevBtn;
+ document.getElementById("vNext").textContent=T[LANG].nextBtn;
  document.getElementById("vPrev").disabled=idx<=0;
  document.getElementById("vNext").disabled=idx>=total-1;
  document.querySelector(".viewer-body").scrollTop=0;
@@ -377,7 +387,7 @@ function stepLesson(n){
 function markDone(){
  const m=doneMap();m[V_LESSON.id]=!m[V_LESSON.id];
  try{localStorage.setItem("gs-done",JSON.stringify(m))}catch(e){}
- renderViewer();toast(m[V_LESSON.id]?"Shabash! Progress save ho gaya":"Wapas khol diya");
+ renderViewer();toast(m[V_LESSON.id]?T[LANG].tDone:T[LANG].tReopen);
 }
 function hearLesson(){if(V_LESSON)hearText(V_LESSON.body+" "+(V_LESSON.points||[]).join(" "))}
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.getElementById("viewer").classList.contains("open"))closeViewer()});
@@ -393,11 +403,11 @@ async function askHero(){const q=document.getElementById("heroQ").value.trim()||
 function micHero(){document.getElementById("doubtQ").value=document.getElementById("heroQ").value;go("saarthi");speak()}
 function speak(){
  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
- if(!SR){toast("Is browser me voice nahi, likhkar puchho");return}
- const r=new SR();r.lang=LANG==="en"?"en-IN":"hi-IN";r.onresult=e=>{document.getElementById("doubtQ").value=e.results[0][0].transcript;askDoubt()};r.start();toast("Bolo, sun rahe hain...");
+ if(!SR){toast(T[LANG].tNoVoice);return}
+ const r=new SR();r.lang=LANG==="en"?"en-IN":"hi-IN";r.onresult=e=>{document.getElementById("doubtQ").value=e.results[0][0].transcript;askDoubt()};r.start();toast(T[LANG].tListen);
 }
 function hear(){if(lastAnswer)hearText(lastAnswer)}
-function hearText(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=LANG==="en"?"en-IN":"hi-IN";speechSynthesis.speak(u)}catch(e){toast("Voice support nahi")}}
+function hearText(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=LANG==="en"?"en-IN":"hi-IN";speechSynthesis.speak(u)}catch(e){toast(T[LANG].tNoVoiceSup)}}
 async function loadSch(){
  let d=uncache("gs-sch-"+LANG);try{d=await jget("/api/scholarships?lang="+LANG);cache("gs-sch-"+LANG,d)}catch(e){}
  if(!d)return;
@@ -407,28 +417,29 @@ async function checkSch(){
  const body={class12_pct:+document.getElementById("fPct").value||0,board:document.getElementById("fBoard").value,income_lakh:+document.getElementById("fInc").value||0,category:document.getElementById("fCat").value,gender:document.getElementById("fGen").value,rural:document.getElementById("fRural").classList.contains("on"),lang:LANG};
  try{const d=await jpost("/api/scholarships/check",body);
  document.getElementById("schOut").innerHTML=d.results.map(r=>`<div class="card ${r.eligible?"eligible":"noteligible"}"><h3>${r.eligible?"✓":"○"} ${r.name}</h3><p>${r.amount} · ${r.portal}</p><p style="font-size:13px">${r.reason}</p></div>`).join("");
- document.getElementById("schOut").scrollIntoView({behavior:"smooth",block:"center"})}catch(e){toast("Server se sampark nahi ho raha")}
+ document.getElementById("schOut").scrollIntoView({behavior:"smooth",block:"center"})}catch(e){toast(T[LANG].tNoServer)}
 }
 const QUIZ=["kheti","bijli / machine","padhana / bachche","hospital / seva","sarkari naukri","computer"];
 let picked=new Set();
 function renderQuiz(){document.getElementById("quizOpts").innerHTML=QUIZ.map(q=>`<button class="quiz-opt ${picked.has(q)?"on":""}" onclick="toggleQ('${q}')">${q}</button>`).join("")}
 function toggleQ(q){picked.has(q)?picked.delete(q):picked.add(q);renderQuiz()}
 async function quiz(){
- if(!picked.size){toast("Pehle 1-2 ruchi chuno");return}
+ if(!picked.size){toast(T[LANG].tPickInt);return}
  try{const d=await jpost("/api/career/quiz",{interests:[...picked].join(" "),qualification:"12th",lang:LANG});
- document.getElementById("quizOut").innerHTML="<div class='grid3' style='margin-top:12px'>"+d.recommendations.map((r,i)=>`<div class="card ${i===0?"eligible":""}">${careerIcon(r.title)}<span class="chip">${i===0?"Sabse sahi":"Vikalp "+(i+1)}</span><h3 style="margin-top:8px">${r.title}</h3><p>${r.desc}</p></div>`).join("")+"</div>"}catch(e){toast("Server se sampark nahi ho raha")}
+ document.getElementById("quizOut").innerHTML="<div class='grid3' style='margin-top:12px'>"+d.recommendations.map((r,i)=>`<div class="card ${i===0?"eligible":""}">${careerIcon(r.title)}<span class="chip">${i===0?T[LANG].top1:T[LANG].topN+" "+(i+1)}</span><h3 style="margin-top:8px">${r.title}</h3><p>${r.desc}</p></div>`).join("")+"</div>"}catch(e){toast(T[LANG].tNoServer)}
 }
 async function loadMentors(){
  let d=uncache("gs-men-"+LANG);try{d=await jget("/api/mentors?lang="+LANG);cache("gs-men-"+LANG,d)}catch(e){}
  if(!d)return;
- document.getElementById("mentors").innerHTML=d.mentors.map(m=>`<div class="card"><h3>${m.name}</h3><p>${m.role}</p><div class="meta">${m.tags.map(t=>`<span class="chip">${t}</span>`).join("")}</div><label>Apna naam</label><input id="n-${m.id}" placeholder="Naam"><label>Kis vishay par?</label><input id="t-${m.id}" placeholder="jaise: ITI me admission"><div style="margin-top:10px"><button class="btn btn-primary" onclick="bookM('${m.id}')">Booking pakki karo</button></div></div>`).join("");
+ document.getElementById("mentors").innerHTML=d.mentors.map(m=>`<div class="card"><h3>${m.name}</h3><p>${m.role}</p><div class="meta">${m.tags.map(t=>`<span class="chip">${t}</span>`).join("")}</div><label>${T[LANG].mName}</label><input id="n-${m.id}" placeholder="${T[LANG].mNamePh}"><label>${T[LANG].mTopic}</label><input id="t-${m.id}" placeholder="${T[LANG].mTopicPh}"><div style="margin-top:10px"><button class="btn btn-primary" onclick="bookM('${m.id}')">${T[LANG].mBook}</button></div></div>`).join("");
 }
 async function bookM(id){
  const name=(document.getElementById("n-"+id).value||"").trim(),topic=(document.getElementById("t-"+id).value||"").trim();
- if(name.length<2||topic.length<2){toast("Naam aur vishay likho");return}
- try{const d=await jpost("/api/mentors/book",{mentor_id:id,name,topic});toast(d.message||"Booking pakki!")}catch(e){toast("Server se sampark nahi ho raha")}
+ if(name.length<2||topic.length<2){toast(T[LANG].tNeedBoth);return}
+ try{const d=await jpost("/api/mentors/book",{mentor_id:id,name,topic});toast(d.message||T[LANG].tBooked)}catch(e){toast(T[LANG].tNoServer)}
 }
-function loadAll(){applyT();renderQuiz();sarthiStatus();loadCourses();loadSch();loadMentors()}
+function loadAll(){applyT();renderQuiz();sarthiStatus();loadCourses();loadSch();loadMentors();
+ if(QPARAMS.get("check")) setTimeout(checkSch,600)}
 loadAll();
 </script>
 </body>
