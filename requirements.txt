@@ -1,2 +1,4 @@
 fastapi>=0.110
 uvicorn[standard]>=0.29
+# LLM is stdlib urllib, no extra dep. Set GEMINI_API_KEY to enable.
+# Optional: GEMINI_MODEL=gemini-2.5-flash (or gemini-3.8-flash when available).

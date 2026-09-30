@@ -5,6 +5,9 @@ career quiz, mentor booking. All content is trilingual (hi/en/hinglish) and
 plain text so it stays usable offline and on low bandwidth.
 """
 
+import json
+import os
+import urllib.request
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -117,18 +120,57 @@ def lesson(lesson_id: str, lang: str = "hi"):
     return {"error": "not found"}
 
 
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
+
+
+def _gemini_answer(question: str, lang: str) -> str | None:
+    """Ask Gemini Flash for a short rural-student-friendly answer.
+
+    Returns None when no key is configured or the call fails, so the
+    caller can fall back to the offline keyword answers. stdlib only,
+    no new dependency.
+    """
+    if not GEMINI_KEY:
+        return None
+    sys = (
+        "You are Sarthi, a tutor for rural MP students. Answer in "
+        + ("Hindi (Devanagari)" if lang == "hi" else "Hinglish (Roman Hindi)" if lang == "hinglish" else "simple English")
+        + ", under 80 words, one small example. Plain text, no markdown."
+    )
+    payload = json.dumps({"contents": [{"parts": [{"text": sys + "\nStudent: " + question}]}]}).encode()
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_KEY}"
+    try:
+        req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            data = json.loads(r.read().decode())
+        parts = data.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+        text = "".join(p.get("text", "") for p in parts).strip()
+        return text or None
+    except Exception:
+        return None
+
+
+@app.get("/api/doubt/status")
+def doubt_status():
+    return {"llm": bool(GEMINI_KEY), "model": GEMINI_MODEL, "mode": "gemini" if GEMINI_KEY else "offline"}
+
+
 @app.post("/api/doubt")
 def doubt(body: DoubtIn):
     q = body.question.lower()
     for d in DOUBTS:
         if any(k in q for k in d["keys"]):
-            return {"answer": pick(d["answer"], body.lang), "matched": True}
+            return {"answer": pick(d["answer"], body.lang), "matched": True, "source": "offline"}
+    ai = _gemini_answer(body.question, body.lang)
+    if ai:
+        return {"answer": ai, "matched": True, "source": "gemini"}
     fallback = {
         "hi": "अच्छा सवाल है! इसका जवाब मैं अभी सीख रहा हूँ। तब तक अपना सवाल अपने शिक्षक से पूछो, या कोर्स लेसन देखो।",
         "en": "Good question! I am still learning this answer. Meanwhile ask your teacher, or check the course lessons.",
         "hinglish": "Achha sawal hai! Iska jawab main abhi seekh raha hoon. Tab tak apne teacher se puchho, ya course lesson dekho.",
     }
-    return {"answer": pick(fallback, body.lang), "matched": False}
+    return {"answer": pick(fallback, body.lang), "matched": False, "source": "offline"}
 
 
 @app.get("/api/scholarships")

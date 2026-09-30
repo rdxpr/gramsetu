@@ -60,8 +60,14 @@ section.block{padding:30px 0}
 .sec-head h2{font-size:28px;letter-spacing:-.02em;margin:0 0 6px}
 .sec-head p{color:var(--muted);margin:0 0 16px;max-width:62ch;line-height:1.6}
 /* UDEMY-STYLE COURSE CARDS */
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
+.grid2{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:14px;align-items:start}
+#schOut{display:flex;flex-direction:column;gap:10px;min-width:0}
+#schOut .card{margin:0}
+.sch-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start;margin-top:14px}
+.sch-grid details{align-self:start;margin:0}
+.career-ico{width:44px;height:44px;border-radius:12px;background:#eef4ec;border:1px solid #cfdfcd;display:grid;place-items:center;margin-bottom:2px}
+.career-ico svg{width:26px;height:26px;display:block}
 .course{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
 .course-cover{display:block;width:100%;height:auto}
 .course-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
@@ -113,7 +119,7 @@ summary{font-weight:700;cursor:pointer}
 @media(max-width:860px){
   .hero{grid-template-columns:1fr;padding-top:22px}
   h1{font-size:32px}
-  .grid3,.grid2,.lesson-grid{grid-template-columns:1fr}
+  .grid3,.grid2,.lesson-grid,.sch-grid{grid-template-columns:1fr}
   .nav-links{display:none}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -258,6 +264,8 @@ const T = {
  hinglish:{navCourses:"Padhai",navDoubt:"Sarthi se puchho",navScholar:"Scholarship",navCareer:"Career",navMentor:"Mentor",kicker:"MP ke rural students ke liye",h1a:"Bina internet rukawat ke,",h1b:"apni bhasha me padhai.",sub:"Offline-first lessons, bolkar sawal puchhne wala AI Sarthi, scholarship checker aur career roadmap. 2G par bhi chale, Hindi, Hinglish aur English me.",cta1:"Free padhai start karo",cta2:"Scholarship check karo",t1:"courses offline",t2:"MP scholarships",t3:"per lesson",coursesH:"Offline-first padhai",coursesP:"Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota, phone me save rehta hai. Diagram ke saath, video aane par yahi player video bhi dikhayega.",doubtH:"Sarthi se puchho",doubtP:"Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.",ask:"Puchho",schH:"Kaunsi scholarship milegi?",schP:"Apne marks aur family situation batao. 6 MP sarkari schemes me eligibility turant, documents list ke saath.",fPct:"12th me kitne %?",fInc:"Family yearly income (lakh me)",check:"Check karo",schHint:"Left me details bharo, result yahan aayega.",carH:"12th ke baad kya?",carP:"Apni interest chuno, MP ke liye best 3 options payo.",suggest:"Options dikhao",menH:"Digital mentoring",menP:"MP ke seniors se baat karo. Naam aur topic likho, booking done.",back:"Wapas"},
  en:{navCourses:"Courses",navDoubt:"Ask Sarthi",navScholar:"Scholarships",navCareer:"Careers",navMentor:"Mentors",kicker:"For rural MP students",h1a:"Study without internet breaks,",h1b:"in your own language.",sub:"Offline-first lessons, voice AI Sarthi for doubts, scholarship checker and career roadmaps. Works on 2G, in Hindi, Hinglish and English.",cta1:"Start learning free",cta2:"Check scholarship",t1:"courses offline",t2:"MP scholarships",t3:"per lesson",coursesH:"Offline-first learning",coursesP:"Open once, study without internet after. Every lesson under 20KB, saved on the phone. With picture diagrams today, the same player will show video when it arrives.",doubtH:"Ask Sarthi",doubtP:"Physics, Maths, English, scholarships or careers. Tap mic, speak, and listen to the answer.",ask:"Ask",schH:"Which scholarship fits you?",schP:"Tell us your marks and family situation. Instant eligibility across 6 MP schemes, with document lists.",fPct:"Class 12 %?",fInc:"Family yearly income (in lakh)",check:"Check",schHint:"Fill details on the left, results appear here.",carH:"What after Class 12?",carP:"Pick your interests, get 3 right paths for MP.",suggest:"Show paths",menH:"Digital mentoring",menP:"Talk to seniors from MP. Write name and topic, booking confirmed.",back:"Back"}
 };
+let SARTHI_MODE="offline";
+async function sarthiStatus(){try{const s=await jget("/api/doubt/status");SARTHI_MODE=s.mode||"offline"}catch(e){}}
 function go(id){document.getElementById(id).scrollIntoView({behavior:"smooth"})}
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",2200)}
 function setNet(){const p=document.getElementById("netpill");const off=!navigator.onLine;p.textContent=off?"● Offline, saved content chalega":"● Online";p.classList.toggle("off",off)}
@@ -281,13 +289,24 @@ function artFor(id){
  if(id==="c1l3") return open("#e8f0e4",`<rect x="90" y="24" width="140" height="132" rx="10" fill="#fffdf6" stroke="#124a28" stroke-width="4"/><path d="M110 70l14 14 26 -30" stroke="#1d6b3c" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M110 112l14 14 26 -30" stroke="#1d6b3c" stroke-width="7" fill="none" stroke-linecap="round"/><rect x="160" y="128" width="52" height="10" rx="5" fill="#e5dcc8"/>`);
  if(id==="c2l1") return open("#fdf1d7",`<rect x="150" y="30" width="20" height="110" fill="#7a5200"/><path d="M60 45h200" stroke="#7a5200" stroke-width="8" stroke-linecap="round"/><path d="M85 49l-25 55h50z" fill="none" stroke="#c4501b" stroke-width="6"/><text x="72" y="92" font-size="20" font-weight="bold" fill="#c4501b">2x</text><path d="M235 49l-25 55h50z" fill="none" stroke="#1d6b3c" stroke-width="6"/><text x="222" y="92" font-size="20" font-weight="bold" fill="#1d6b3c">11</text><rect x="120" y="140" width="80" height="12" rx="6" fill="#7a5200"/>`);
  if(id==="c2l2") return open("#124a28",`<path d="M30 150h260" stroke="#faf6ef" stroke-width="4" opacity=".5"/><path d="M60 150 Q160 150 160 60 Q160 150 260 150" fill="none" stroke="#f2a413" stroke-width="7" stroke-linecap="round"/><circle cx="160" cy="60" r="8" fill="#fff"/><text x="40" y="45" fill="#fff" font-size="20" font-weight="bold">x = 2 ya 3</text>`);
- if(id==="c3l1") return open("#e8f0e4",`<circle cx="110" cy="80" r="30" fill="#1d6b3c"/><rect x="80" y="112" width="60" height="44" rx="20" fill="#1d6b3c"/><rect x="160" y="50" width="120" height="26" rx="13" fill="#fffdf6" stroke="#124a28" stroke-width="3"/><rect x="160" y="84" width="90" height="22" rx="11" fill="#f2a413"/><rect x="160" y="114" width="105" height="22" rx="11" fill="#fffdf6" stroke="#124a28" stroke-width="3"/>`);
- return open("#fdf1d7",`<rect x="40" y="40" width="240" height="26" rx="6" fill="#c4501b"/><path d="M40 66l20 22 20 -22 20 22 20 -22 20 22 20 -22 20 22 20 -22 20 22 20 -22 20 22 20 -22" fill="none" stroke="#faf6ef" stroke-width="4"/><rect x="70" y="100" width="180" height="56" rx="8" fill="#fffdf6" stroke="#124a28" stroke-width="4"/><text x="92" y="134" font-size="19" font-weight="bold" fill="#124a28">How much?</text>`);
+ if(id==="c3l1") return open("#e8f0e4",`<rect x="28" y="30" width="120" height="120" rx="14" fill="#1d6b3c"/><circle cx="88" cy="72" r="22" fill="#fffdf6"/><rect x="64" y="100" width="48" height="28" rx="13" fill="#fffdf6"/><rect x="164" y="38" width="128" height="28" rx="14" fill="#fffdf6" stroke="#124a28" stroke-width="3"/><rect x="164" y="74" width="96" height="24" rx="12" fill="#f2a413"/><rect x="164" y="106" width="112" height="24" rx="12" fill="#fffdf6" stroke="#124a28" stroke-width="3"/><text x="30" y="168" font-size="14" font-weight="bold" fill="#124a28">Namaste, main Sita</text>`);
+ return open("#fdf1d7",`<rect x="40" y="34" width="240" height="30" rx="8" fill="#c4501b"/><rect x="60" y="34" width="24" height="30" fill="#fffdf6"/><rect x="108" y="34" width="24" height="30" fill="#fffdf6"/><rect x="156" y="34" width="24" height="30" fill="#fffdf6"/><rect x="204" y="34" width="24" height="30" fill="#fffdf6"/><rect x="40" y="64" width="240" height="10" fill="#124a28" opacity=".15"/><rect x="70" y="96" width="180" height="56" rx="10" fill="#fffdf6" stroke="#124a28" stroke-width="4"/><text x="94" y="130" font-size="19" font-weight="bold" fill="#124a28">How much?</text>`);
 }
 function coverFor(cid){
  if(cid==="c1") return artFor("c1l1");
  if(cid==="c2") return artFor("c2l2");
- return artFor("c3l2");
+ return artFor("c3l1");
+}
+/* Career icons: small inline SVGs, zero extra requests. Map by keyword. */
+function careerIcon(title){
+ const t=(title||"").toLowerCase();
+ const wrap=inner=>`<span class="career-ico"><svg viewBox="0 0 26 26" fill="none" stroke="#124a28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${inner}</svg></span>`;
+ if(/nurs|hospital|seva|health|bio/.test(t)) return wrap(`<path d="M13 4v18M4 13h18"/><rect x="9" y="2" width="8" height="22" rx="1"/><rect x="2" y="9" width="22" height="8" rx="1"/>`);
+ if(/iti|electric|bijli|machine|mistri/.test(t)) return wrap(`<path d="M14 2 5 15h6l-1 9 9-13h-6z"/>`);
+ if(/teach|padh|school|bachch|shiksh/.test(t)) return wrap(`<path d="M13 3 2 8l11 5 9-4v7"/><path d="M6 10v7c0 2 3 4 7 4s7-2 7-4v-7"/>`);
+ if(/polytech|diploma|engineer|civil|mechan/.test(t)) return wrap(`<circle cx="13" cy="13" r="3"/><path d="M13 2v4M13 20v4M2 13h4M20 13h4M5 5l3 3M18 18l3 3M21 5l-3 3M8 18l-3 3"/>`);
+ if(/agri|kheti|kisan|fasal|gaon/.test(t)) return wrap(`<path d="M13 22V10M13 10C13 6 10 3 5 3c0 5 3 7 8 7zM13 14c0-4 3-7 8-7 0 5-3 7-8 7z"/>`);
+ return wrap(`<rect x="4" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M4 12h18"/>`);
 }
 
 let COURSES=[];
@@ -363,7 +382,7 @@ let lastAnswer="";
 async function askDoubt(){
  const q=document.getElementById("doubtQ").value.trim();if(!q)return;
  const box=document.getElementById("doubtA");box.style.display="block";box.textContent="Sarthi soch raha hai...";
- try{const d=await jpost("/api/doubt",{question:q,lang:LANG});lastAnswer=d.answer;box.textContent=d.answer;document.getElementById("hearBtn").style.display="inline-block"}catch(e){box.textContent="Server se sampark nahi ho raha."}
+ try{const d=await jpost("/api/doubt",{question:q,lang:LANG});lastAnswer=d.answer;box.innerHTML="";const src=document.createElement("div");src.className="meta";src.textContent=d.source==="gemini"?"AI jawab (Gemini)":"Offline jawab";box.appendChild(src);const p=document.createElement("div");p.textContent=d.answer;box.appendChild(p);document.getElementById("hearBtn").style.display="inline-block"}catch(e){box.textContent="Server se sampark nahi ho raha."}
 }
 async function askHero(){const q=document.getElementById("heroQ").value.trim()||"Newton ka niyam kya hai?";
  try{const d=await jpost("/api/doubt",{question:q,lang:LANG});const h=document.getElementById("heroA");h.style.display="block";h.textContent=d.answer}catch(e){}}
@@ -378,12 +397,12 @@ function hearText(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtt
 async function loadSch(){
  let d=uncache("gs-sch-"+LANG);try{d=await jget("/api/scholarships?lang="+LANG);cache("gs-sch-"+LANG,d)}catch(e){}
  if(!d)return;
- document.getElementById("schList").innerHTML="<div class='grid3' style='margin-top:14px'>"+d.scholarships.map(s=>`<details><summary>${s.name} · ${s.amount}</summary><p><b>Portal:</b> ${s.portal}</p><p><b>Chahiye:</b> ${s.need.join(" | ")}</p><p><b>Kagaz:</b> ${s.docs.join(" | ")}</p></details>`).join("")+"</div>";
+ document.getElementById("schList").innerHTML="<div class='sch-grid'>"+d.scholarships.map(s=>`<details><summary>${s.name} · ${s.amount}</summary><p><b>Portal:</b> ${s.portal}</p><p><b>Chahiye:</b> ${s.need.join(" | ")}</p><p><b>Kagaz:</b> ${s.docs.join(" | ")}</p></details>`).join("")+"</div>";
 }
 async function checkSch(){
  const body={class12_pct:+document.getElementById("fPct").value||0,board:document.getElementById("fBoard").value,income_lakh:+document.getElementById("fInc").value||0,category:document.getElementById("fCat").value,gender:document.getElementById("fGen").value,rural:document.getElementById("fRural").classList.contains("on"),lang:LANG};
  try{const d=await jpost("/api/scholarships/check",body);
- document.getElementById("schOut").innerHTML=d.results.map(r=>`<div class="card ${r.eligible?"eligible":"noteligible"}" style="margin-bottom:10px"><h3>${r.eligible?"✓":"○"} ${r.name}</h3><p>${r.amount} · ${r.portal}</p><p style="font-size:13px">${r.reason}</p></div>`).join("");
+ document.getElementById("schOut").innerHTML=d.results.map(r=>`<div class="card ${r.eligible?"eligible":"noteligible"}"><h3>${r.eligible?"✓":"○"} ${r.name}</h3><p>${r.amount} · ${r.portal}</p><p style="font-size:13px">${r.reason}</p></div>`).join("");
  document.getElementById("schOut").scrollIntoView({behavior:"smooth",block:"center"})}catch(e){toast("Server se sampark nahi ho raha")}
 }
 const QUIZ=["kheti","bijli / machine","padhana / bachche","hospital / seva","sarkari naukri","computer"];
@@ -393,7 +412,7 @@ function toggleQ(q){picked.has(q)?picked.delete(q):picked.add(q);renderQuiz()}
 async function quiz(){
  if(!picked.size){toast("Pehle 1-2 ruchi chuno");return}
  try{const d=await jpost("/api/career/quiz",{interests:[...picked].join(" "),qualification:"12th",lang:LANG});
- document.getElementById("quizOut").innerHTML="<div class='grid3' style='margin-top:12px'>"+d.recommendations.map((r,i)=>`<div class="card ${i===0?"eligible":""}"><span class="chip">${i===0?"Sabse sahi":"Vikalp "+(i+1)}</span><h3 style="margin-top:8px">${r.title}</h3><p>${r.desc}</p></div>`).join("")+"</div>"}catch(e){toast("Server se sampark nahi ho raha")}
+ document.getElementById("quizOut").innerHTML="<div class='grid3' style='margin-top:12px'>"+d.recommendations.map((r,i)=>`<div class="card ${i===0?"eligible":""}">${careerIcon(r.title)}<span class="chip">${i===0?"Sabse sahi":"Vikalp "+(i+1)}</span><h3 style="margin-top:8px">${r.title}</h3><p>${r.desc}</p></div>`).join("")+"</div>"}catch(e){toast("Server se sampark nahi ho raha")}
 }
 async function loadMentors(){
  let d=uncache("gs-men-"+LANG);try{d=await jget("/api/mentors?lang="+LANG);cache("gs-men-"+LANG,d)}catch(e){}
@@ -405,7 +424,7 @@ async function bookM(id){
  if(name.length<2||topic.length<2){toast("Naam aur vishay likho");return}
  try{const d=await jpost("/api/mentors/book",{mentor_id:id,name,topic});toast(d.message||"Booking pakki!")}catch(e){toast("Server se sampark nahi ho raha")}
 }
-function loadAll(){applyT();renderQuiz();loadCourses();loadSch();loadMentors()}
+function loadAll(){applyT();renderQuiz();sarthiStatus();loadCourses();loadSch();loadMentors()}
 loadAll();
 </script>
 </body>
