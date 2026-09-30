@@ -347,3 +347,43 @@ MENTORS = [
     {"id": "m2", "name": "Ravi Uikey", "role_hi": "ITI इलेक्ट्रीशियन, छिंदवाड़ा", "role_en": "ITI Electrician, Chhindwara", "tags": ["iti", "technical", "tribal"]},
     {"id": "m3", "name": "Pooja Maravi", "role_hi": "प्राइमरी शिक्षक, मंडला", "role_en": "Primary teacher, Mandla", "tags": ["teacher", "tribal", "girl"]},
 ]
+
+# Takeaway points per lesson (trilingual). Shown in the immersive lesson
+# viewer under "Yaad rakho". Still plain text, still tiny.
+POINTS = {
+    "c1l1": {
+        "hi": ["Gati ka matlab jagah badalna", "Sthir vastu khud nahi hilti", "Bus aur panchhi gati ke udaharan"],
+        "en": ["Motion means changing position", "A resting object does not move alone", "Bus and bird are motion examples"],
+        "hinglish": ["Gati ka matlab jagah badalna", "Sthir vastu khud nahi hilti", "Bus aur panchhi example hain"],
+    },
+    "c1l2": {
+        "hi": ["Veg me disha hoti hai, chaal me nahi", "Tvaran veg ke badlav ko kehte hain", "Ikai m/s aur m/s sq"],
+        "en": ["Velocity has direction, speed does not", "Acceleration is change in velocity", "Units are m/s and m/s sq"],
+        "hinglish": ["Veg me disha hoti hai, chaal me nahi", "Tvaran veg ka badlav hai", "Unit m/s aur m/s sq"],
+    },
+    "c1l3": {
+        "hi": ["Ausat chaal equals doori divided by samay", "120 km in 2 ghante equals 60 km/h", "Veg aur chaal ka antar likhkar dekho"],
+        "en": ["Average speed equals distance divided by time", "120 km in 2 hours equals 60 km/h", "Write out speed vs velocity once"],
+        "hinglish": ["Ausat chaal equals doori divided by samay", "120 km in 2 ghante equals 60 km/h", "Veg aur chaal ka antar likhkar dekho"],
+    },
+    "c2l1": {
+        "hi": ["Dono taraf same kriya karo", "2x plus 3 equals 11 me x equals 4", "Jawab rakhkar janch karo"],
+        "en": ["Do the same step on both sides", "In 2x plus 3 equals 11, x equals 4", "Check by putting the answer back"],
+        "hinglish": ["Dono taraf same step karo", "2x plus 3 equals 11 me x equals 4", "Jawab rakhkar check karo"],
+    },
+    "c2l2": {
+        "hi": ["Pehle gunankhand dhoondo", "Factors se x equals 2 ya 3", "Sutra bhi kaam karta hai"],
+        "en": ["Try factors first", "Factors give x equals 2 or 3", "The formula works too"],
+        "hinglish": ["Pehle gunankhand try karo", "Factors se x equals 2 ya 3", "Formula bhi kaam karta hai"],
+    },
+    "c3l1": {
+        "hi": ["My name is se shuru karo", "Gaon ka naam jodo", "Roz ek baar zor se bolo"],
+        "en": ["Start with My name is", "Add your village name", "Say it aloud once daily"],
+        "hinglish": ["My name is se start karo", "Gaon ka naam jodo", "Roz ek baar zor se bolo"],
+    },
+    "c3l2": {
+        "hi": ["How much is this puchho", "Daam zyada lage to Too costly kaho", "Muskurakar baat karo"],
+        "en": ["Ask How much is this", "Say Too costly if the price is high", "Speak with a smile"],
+        "hinglish": ["How much is this puchho", "Daam zyada ho to Too costly kaho", "Muskurakar baat karo"],
+    },
+}

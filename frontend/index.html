@@ -7,7 +7,7 @@
 <style>
 :root{
   --paper:#faf6ef; --ink:#1c1a15; --muted:#6b6455;
-  --leaf:#1d6b3c; --leaf-deep:#124a28; --sun:#f2a413; --clay:#c4501b;
+  --leaf:#1d6b3c; --leaf-deep:#124a28; --sun:#f2a413;
   --card:#ffffff; --line:#e5dcc8; --radius:14px;
 }
 *{box-sizing:border-box}
@@ -16,10 +16,10 @@ body{margin:0;background:var(--paper);color:var(--ink);
 .wrap{max-width:1080px;margin:0 auto;padding:0 16px}
 /* NAV */
 .nav{position:sticky;top:0;z-index:20;background:rgba(250,246,239,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.nav-in{display:flex;align-items:center;gap:12px;height:64px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
-.brand-mark{width:34px;height:34px;border-radius:10px;background:var(--leaf);color:#fff;display:grid;place-items:center;font-size:19px}
-.nav-links{display:flex;gap:4px;margin-left:8px}
+.nav-in{display:flex;align-items:center;gap:12px;height:60px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;text-decoration:none;color:var(--ink)}
+.brand-mark{width:32px;height:32px;border-radius:9px;background:var(--leaf);color:#fff;display:grid;place-items:center;font-size:18px}
+.nav-links{display:flex;gap:2px;margin-left:6px}
 .nav-links a{color:var(--ink);text-decoration:none;font-size:14px;padding:8px 10px;border-radius:9px}
 .nav-links a:hover{background:#efe7d3}
 .nav-right{margin-left:auto;display:flex;gap:8px;align-items:center}
@@ -29,31 +29,49 @@ select,.btn{font:inherit}
 .btn-primary{background:var(--leaf);color:#fff}
 .btn-primary:active{transform:scale(.98)}
 .btn-sun{background:var(--sun);color:#2a1d00}
-.btn-ghost{background:transparent;border:1px solid var(--line)}
-.offline-pill{font-size:12px;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:#fff}
+.btn-ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.offline-pill{font-size:12px;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:#fff;white-space:nowrap}
 .offline-pill.off{background:#fdeaea;border-color:#e5b4b4;color:#a33}
-/* HERO asymmetric split */
-.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center;padding:40px 0 8px;min-height:calc(100dvh - 64px);align-content:center}
+/* HERO compact split */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;padding:30px 0 6px}
 .kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--leaf);font-weight:800}
-h1{font-size:44px;line-height:1.05;letter-spacing:-.02em;margin:10px 0 12px}
+h1{font-size:40px;line-height:1.08;letter-spacing:-.02em;margin:10px 0 10px}
 h1 .it{font-style:italic;color:var(--leaf-deep)}
-.sub{font-size:17px;color:#4c4739;line-height:1.6;max-width:46ch;margin:0 0 18px}
+.sub{font-size:16px;color:#4c4739;line-height:1.6;max-width:46ch;margin:0 0 16px}
 .cta-row{display:flex;gap:10px;flex-wrap:wrap}
-.trust{display:flex;gap:18px;margin-top:16px;color:var(--muted);font-size:13px}
+.trust{display:flex;gap:16px;margin-top:14px;color:var(--muted);font-size:13px;flex-wrap:wrap}
 .trust b{color:var(--ink)}
-.hero-art{background:var(--leaf-deep);border-radius:20px;color:#fff;padding:26px;position:relative;overflow:hidden}
-.hero-art::after{content:"";position:absolute;inset:auto -60px -90px auto;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,var(--sun) 0 34%,transparent 35%)}
-.lesson-card{background:#fffdf6;border:1px solid #ffffff22;border-radius:12px;padding:14px;margin:10px 0;color:#20301f;position:relative;z-index:1}
-.lesson-card small{color:#5c6b58}
-.voicebar{display:flex;gap:8px;margin-top:12px;position:relative;z-index:1}
-.voicebar input{flex:1;border:0;border-radius:10px;padding:12px;font:inherit}
-.voicebar button{border:0;border-radius:10px;padding:0 14px;font-size:18px;background:var(--sun);cursor:pointer}
+/* hero demo panel: structured mini player, fixed geometry */
+.hero-art{background:var(--leaf-deep);border-radius:20px;color:#fff;padding:20px}
+.hero-art h4{margin:0;font-size:15px}
+.hero-art .sub2{opacity:.75;font-size:13px;margin:2px 0 12px}
+.demo-row{display:flex;gap:10px;align-items:center;background:#fffdf6;color:#20301f;border-radius:12px;padding:10px 12px;margin:8px 0}
+.demo-play{flex:0 0 30px;width:30px;height:30px;border-radius:50%;background:var(--leaf);color:#fff;display:grid;place-items:center;font-size:13px}
+.demo-row small{display:block;color:#5c6b58;font-size:12px}
+.demo-row b{font-size:14px}
+.voicebar{display:grid;grid-template-columns:1fr 46px 46px;gap:8px;margin-top:10px}
+.voicebar input{border:0;border-radius:10px;padding:0 12px;font:inherit;height:46px;min-width:0}
+.voicebar button{border:0;border-radius:10px;height:46px;font-size:18px;cursor:pointer;display:grid;place-items:center}
+.voicebar .mic{background:var(--sun)}
+.voicebar .send{background:#fff;color:var(--leaf-deep);font-size:20px}
+.hero-answ{background:#fffdf6;color:#20301f;border-radius:12px;padding:12px 14px;margin-top:8px;font-size:14px;line-height:1.6}
 /* SECTIONS */
-section.block{padding:44px 0}
-.sec-head h2{font-size:30px;letter-spacing:-.02em;margin:0 0 6px}
-.sec-head p{color:var(--muted);margin:0 0 18px;max-width:62ch;line-height:1.6}
+section.block{padding:30px 0}
+.sec-head h2{font-size:28px;letter-spacing:-.02em;margin:0 0 6px}
+.sec-head p{color:var(--muted);margin:0 0 16px;max-width:62ch;line-height:1.6}
+/* UDEMY-STYLE COURSE CARDS */
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.course{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.course-cover{display:block;width:100%;height:auto}
+.course-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.course-body h3{margin:0;font-size:17px}
+.course-body .desc{margin:0;color:#57503f;font-size:14px;line-height:1.55}
+.course-meta{font-size:12px;color:var(--muted)}
+.pbar{height:8px;border-radius:99px;background:#eee5cf;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--leaf);border-radius:99px;transition:width .3s}
+.prow{display:flex;align-items:center;gap:10px}
+.prow .pct{font-size:12px;font-weight:800;color:var(--leaf-deep);white-space:nowrap}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
 .card h3{margin:0 0 6px;font-size:17px}
 .card p{margin:0 0 12px;color:#57503f;font-size:14px;line-height:1.6}
@@ -70,12 +88,32 @@ details{border:1px solid var(--line);border-radius:12px;background:#fff;padding:
 summary{font-weight:700;cursor:pointer}
 .quiz-opt{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;cursor:pointer;font-size:14px}
 .quiz-opt.on{background:var(--leaf);color:#fff;border-color:var(--leaf)}
-.foot{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);font-size:13px;line-height:1.7}
-.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#1c1a15;color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;display:none;z-index:50}
+.foot{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--muted);font-size:13px;line-height:1.7}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#1c1a15;color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;display:none;z-index:80}
+/* FULLSCREEN LESSON VIEWER */
+.viewer{position:fixed;inset:0;z-index:60;background:var(--paper);display:none;flex-direction:column}
+.viewer.open{display:flex}
+.viewer-top{background:var(--leaf-deep);color:#fff;padding:12px 0}
+.viewer-top .wrap{display:flex;align-items:center;gap:12px}
+.back-btn{border:0;background:#ffffff22;color:#fff;border-radius:9px;padding:8px 12px;font:inherit;font-weight:700;cursor:pointer;white-space:nowrap}
+.viewer-title{min-width:0}
+.viewer-title b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.viewer-title span{font-size:12px;opacity:.75}
+.viewer-top .pbar{flex:1;background:#ffffff2e;min-width:60px}
+.viewer-top .pbar i{background:var(--sun)}
+.viewer-body{flex:1;overflow:auto;padding:22px 0 40px}
+.lesson-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:start}
+.lesson-art svg{width:100%;height:auto;display:block;border-radius:16px}
+.lesson-text h2{font-size:26px;margin:6px 0 8px;letter-spacing:-.01em}
+.lesson-text .lede{font-size:16px;line-height:1.7;margin:0 0 14px}
+.points{list-style:none;margin:0 0 16px;padding:0;display:flex;flex-direction:column;gap:8px}
+.points li{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;display:flex;gap:9px;align-items:flex-start}
+.points li::before{content:"✓";color:var(--leaf);font-weight:800}
+.datanote{font-size:12px;color:var(--muted)}
 @media(max-width:860px){
-  .hero{grid-template-columns:1fr;min-height:auto;padding-top:28px}
-  h1{font-size:34px}
-  .grid3,.grid2{grid-template-columns:1fr}
+  .hero{grid-template-columns:1fr;padding-top:22px}
+  h1{font-size:32px}
+  .grid3,.grid2,.lesson-grid{grid-template-columns:1fr}
   .nav-links{display:none}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -83,7 +121,7 @@ summary{font-weight:700;cursor:pointer}
 </head>
 <body>
 <div class="nav"><div class="wrap nav-in">
-  <div class="brand"><span class="brand-mark">ज्ञा</span> GramSetu <span style="font-weight:400;color:var(--muted);font-size:13px">Ask Sarthi</span></div>
+  <a class="brand" href="#"><span class="brand-mark">ज्ञा</span> GramSetu</a>
   <nav class="nav-links">
     <a href="#padhai" data-t="navCourses">पढ़ाई</a>
     <a href="#saarthi" data-t="navDoubt">सारथी से पूछो</a>
@@ -111,21 +149,20 @@ summary{font-weight:700;cursor:pointer}
       <div class="trust"><span><b>3</b> <span data-t="t1">courses offline</span></span><span><b>6</b> <span data-t="t2">MP scholarships</span></span><span><b>&lt;20KB</b> <span data-t="t3">prati lesson</span></span></div>
     </div>
     <div class="hero-art">
-      <div style="font-weight:800;font-size:15px">Sarthi live demo</div>
-      <div style="opacity:.8;font-size:13px">Bolo ya likho, jawab turant</div>
-      <div class="lesson-card"><small>Physics, Class 12</small><div><b>Gati kya hai?</b> Jab vastu jagah badle...</div></div>
-      <div class="lesson-card"><small>Scholarship</small><div><b>MMVY:</b> 12th me 70% + aay 6L tak, poori fees</div></div>
-      <div class="voicebar"><input id="heroQ" placeholder="Sawal bolo ya likho..."><button onclick="askHero()" title="Bolo">🎙</button><button onclick="askHero()" style="background:#fff" title="Puchho">➤</button></div>
-      <div class="answer" id="heroA" style="display:none;background:#fffdf6"></div>
+      <h4>Sarthi live demo</h4>
+      <div class="sub2">Bolo ya likho, jawab turant</div>
+      <div class="demo-row"><span class="demo-play">▶</span><span><small>Physics, Class 12</small><b>Gati kya hai? Jab vastu jagah badle...</b></span></div>
+      <div class="demo-row"><span class="demo-play">▶</span><span><small>Scholarship</small><b>MMVY: 12th me 70% + aay 6L tak, poori fees</b></span></div>
+      <div class="voicebar"><input id="heroQ" placeholder="Sawal bolo ya likho..."><button class="mic" onclick="micHero()" title="Bolo">🎙</button><button class="send" onclick="askHero()" title="Puchho">➤</button></div>
+      <div class="hero-answ" id="heroA" style="display:none"></div>
     </div>
   </div>
 
   <!-- COURSES -->
   <section class="block" id="padhai">
     <div class="sec-head"><h2 data-t="coursesH">Offline-first padhai</h2>
-    <p data-t="coursesP">Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota hai aur phone me save rehta hai.</p></div>
+    <p data-t="coursesP">Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota hai aur phone me save rehta hai. Tasveer wale diagram ke saath, video aane par yahi player video bhi dikhayega.</p></div>
     <div class="grid3" id="courses"></div>
-    <div class="card" id="lessonView" style="display:none;margin-top:14px"></div>
   </section>
 
   <!-- DOUBT -->
@@ -181,15 +218,45 @@ summary{font-weight:700;cursor:pointer}
 
   <div class="foot">GramSetu (Ask Sarthi) hackathon MVP. Scholarship jankari 2026 ke niyamon par adharit saransh hai, aavedan hamesha <b>hescholarship.mp.gov.in</b> par janchkar karo. Low-bandwidth demo: poora page 1 request me, API text-only.</div>
 </div>
+
+<!-- FULLSCREEN LESSON VIEWER -->
+<div class="viewer" id="viewer" role="dialog" aria-modal="true">
+  <div class="viewer-top"><div class="wrap">
+    <button class="back-btn" onclick="closeViewer()">← <span data-t="back">Wapas</span></button>
+    <div class="viewer-title"><b id="vTitle"></b><span id="vSub"></span></div>
+    <div class="pbar"><i id="vProg" style="width:0%"></i></div>
+  </div></div>
+  <div class="viewer-body"><div class="wrap">
+    <div class="lesson-grid">
+      <div class="lesson-art" id="vArt"></div>
+      <div class="lesson-text">
+        <span class="chip sun" id="vCourse"></span>
+        <h2 id="vHead"></h2>
+        <p class="lede" id="vBody"></p>
+        <ul class="points" id="vPoints"></ul>
+        <div class="row">
+          <button class="btn btn-ghost" id="vHear" onclick="hearLesson()">🔊 Suno</button>
+          <button class="btn btn-primary" id="vDone" onclick="markDone()">✓ Yaad ho gaya</button>
+        </div>
+        <p class="datanote" id="vData"></p>
+        <div class="row" style="margin-top:14px">
+          <button class="btn btn-ghost" id="vPrev" onclick="stepLesson(-1)">← Pichhla</button>
+          <button class="btn btn-ghost" id="vNext" onclick="stepLesson(1)">Agla →</button>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
 <div class="toast" id="toast"></div>
 <script>
 const API = "";
 let LANG = localStorage.getItem("gs-lang") || "hi";
 document.getElementById("lang").value = LANG;
 const T = {
- hi:{navCourses:"पढ़ाई",navDoubt:"सारथी से पूछो",navScholar:"छात्रवृत्ति",navCareer:"करियर",navMentor:"मेंटोर",kicker:"MP ke grameen students ke liye",h1a:"Bina internet rukawat ke,",h1b:"apni bhasha me padhai.",sub:"Offline-first lessons, bolkar sawal puchhne wala AI Sarthi, scholarship checker aur career roadmap. 2G par bhi chale, Hindi, Hinglish aur English me.",cta1:"Muft padhai shuru karo",cta2:"Scholarship check karo",t1:"courses offline",t2:"MP scholarships",t3:"prati lesson",coursesH:"Offline-first padhai",coursesP:"Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota hai aur phone me save rehta hai.",doubtH:"Sarthi se puchho",doubtP:"Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.",ask:"Puchho",schH:"Kaunsi scholarship milegi?",schP:"Apne number aur parivar ki sthiti batao. Hum 6 MP sarkari yojnaon me eligibility turant batayenge, sath me kagaz ki list.",fPct:"12vi me kitne %?",fInc:"Parivar ki saalana aay (lakh me)",check:"Check karo",schHint:"Left me jankari bharo, yahan natija aayega.",carH:"12vi ke baad kya?",carP:"Apni ruchi chuno, hum MP ke liye sahi 3 raste sujhayenge.",suggest:"Raste dikhao",menH:"Digital mentoring",menP:"MP ke hi didi-bhaiya se baat karo. Naam aur vishay likho, booking pakki."},
- hinglish:{navCourses:"Padhai",navDoubt:"Sarthi se puchho",navScholar:"Scholarship",navCareer:"Career",navMentor:"Mentor",kicker:"MP ke rural students ke liye",h1a:"Bina internet rukawat ke,",h1b:"apni bhasha me padhai.",sub:"Offline-first lessons, bolkar sawal puchhne wala AI Sarthi, scholarship checker aur career roadmap. 2G par bhi chale, Hindi, Hinglish aur English me.",cta1:"Free padhai start karo",cta2:"Scholarship check karo",t1:"courses offline",t2:"MP scholarships",t3:"per lesson",coursesH:"Offline-first padhai",coursesP:"Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota, phone me save rehta hai.",doubtH:"Sarthi se puchho",doubtP:"Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.",ask:"Puchho",schH:"Kaunsi scholarship milegi?",schP:"Apne marks aur family situation batao. 6 MP sarkari schemes me eligibility turant, documents list ke saath.",fPct:"12th me kitne %?",fInc:"Family yearly income (lakh me)",check:"Check karo",schHint:"Left me details bharo, result yahan aayega.",carH:"12th ke baad kya?",carP:"Apni interest chuno, MP ke liye best 3 options payo.",suggest:"Options dikhao",menH:"Digital mentoring",menP:"MP ke seniors se baat karo. Naam aur topic likho, booking done."},
- en:{navCourses:"Courses",navDoubt:"Ask Sarthi",navScholar:"Scholarships",navCareer:"Careers",navMentor:"Mentors",kicker:"For rural MP students",h1a:"Study without internet breaks,",h1b:"in your own language.",sub:"Offline-first lessons, voice AI Sarthi for doubts, scholarship checker and career roadmaps. Works on 2G, in Hindi, Hinglish and English.",cta1:"Start learning free",cta2:"Check scholarship",t1:"courses offline",t2:"MP scholarships",t3:"per lesson",coursesH:"Offline-first learning",coursesP:"Open once, study without internet after. Every lesson under 20KB, saved on the phone.",doubtH:"Ask Sarthi",doubtP:"Physics, Maths, English, scholarships or careers. Tap mic, speak, and listen to the answer.",ask:"Ask",schH:"Which scholarship fits you?",schP:"Tell us your marks and family situation. Instant eligibility across 6 MP schemes, with document lists.",fPct:"Class 12 %?",fInc:"Family yearly income (in lakh)",check:"Check",schHint:"Fill details on the left, results appear here.",carH:"What after Class 12?",carP:"Pick your interests, get 3 right paths for MP.",suggest:"Show paths",menH:"Digital mentoring",menP:"Talk to seniors from MP. Write name and topic, booking confirmed."}
+ hi:{navCourses:"पढ़ाई",navDoubt:"सारथी से पूछो",navScholar:"छात्रवृत्ति",navCareer:"करियर",navMentor:"मेंटोर",kicker:"MP ke grameen students ke liye",h1a:"Bina internet rukawat ke,",h1b:"apni bhasha me padhai.",sub:"Offline-first lessons, bolkar sawal puchhne wala AI Sarthi, scholarship checker aur career roadmap. 2G par bhi chale, Hindi, Hinglish aur English me.",cta1:"Muft padhai shuru karo",cta2:"Scholarship check karo",t1:"courses offline",t2:"MP scholarships",t3:"prati lesson",coursesH:"Offline-first padhai",coursesP:"Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota hai aur phone me save rehta hai. Tasveer wale diagram ke saath, video aane par yahi player video bhi dikhayega.",doubtH:"Sarthi se puchho",doubtP:"Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.",ask:"Puchho",schH:"Kaunsi scholarship milegi?",schP:"Apne number aur parivar ki sthiti batao. Hum 6 MP sarkari yojnaon me eligibility turant batayenge, sath me kagaz ki list.",fPct:"12vi me kitne %?",fInc:"Parivar ki saalana aay (lakh me)",check:"Check karo",schHint:"Left me jankari bharo, yahan natija aayega.",carH:"12vi ke baad kya?",carP:"Apni ruchi chuno, hum MP ke liye sahi 3 raste sujhayenge.",suggest:"Raste dikhao",menH:"Digital mentoring",menP:"MP ke hi didi-bhaiya se baat karo. Naam aur vishay likho, booking pakki.",back:"Wapas"},
+ hinglish:{navCourses:"Padhai",navDoubt:"Sarthi se puchho",navScholar:"Scholarship",navCareer:"Career",navMentor:"Mentor",kicker:"MP ke rural students ke liye",h1a:"Bina internet rukawat ke,",h1b:"apni bhasha me padhai.",sub:"Offline-first lessons, bolkar sawal puchhne wala AI Sarthi, scholarship checker aur career roadmap. 2G par bhi chale, Hindi, Hinglish aur English me.",cta1:"Free padhai start karo",cta2:"Scholarship check karo",t1:"courses offline",t2:"MP scholarships",t3:"per lesson",coursesH:"Offline-first padhai",coursesP:"Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota, phone me save rehta hai. Diagram ke saath, video aane par yahi player video bhi dikhayega.",doubtH:"Sarthi se puchho",doubtP:"Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.",ask:"Puchho",schH:"Kaunsi scholarship milegi?",schP:"Apne marks aur family situation batao. 6 MP sarkari schemes me eligibility turant, documents list ke saath.",fPct:"12th me kitne %?",fInc:"Family yearly income (lakh me)",check:"Check karo",schHint:"Left me details bharo, result yahan aayega.",carH:"12th ke baad kya?",carP:"Apni interest chuno, MP ke liye best 3 options payo.",suggest:"Options dikhao",menH:"Digital mentoring",menP:"MP ke seniors se baat karo. Naam aur topic likho, booking done.",back:"Wapas"},
+ en:{navCourses:"Courses",navDoubt:"Ask Sarthi",navScholar:"Scholarships",navCareer:"Careers",navMentor:"Mentors",kicker:"For rural MP students",h1a:"Study without internet breaks,",h1b:"in your own language.",sub:"Offline-first lessons, voice AI Sarthi for doubts, scholarship checker and career roadmaps. Works on 2G, in Hindi, Hinglish and English.",cta1:"Start learning free",cta2:"Check scholarship",t1:"courses offline",t2:"MP scholarships",t3:"per lesson",coursesH:"Offline-first learning",coursesP:"Open once, study without internet after. Every lesson under 20KB, saved on the phone. With picture diagrams today, the same player will show video when it arrives.",doubtH:"Ask Sarthi",doubtP:"Physics, Maths, English, scholarships or careers. Tap mic, speak, and listen to the answer.",ask:"Ask",schH:"Which scholarship fits you?",schP:"Tell us your marks and family situation. Instant eligibility across 6 MP schemes, with document lists.",fPct:"Class 12 %?",fInc:"Family yearly income (in lakh)",check:"Check",schHint:"Fill details on the left, results appear here.",carH:"What after Class 12?",carP:"Pick your interests, get 3 right paths for MP.",suggest:"Show paths",menH:"Digital mentoring",menP:"Talk to seniors from MP. Write name and topic, booking confirmed.",back:"Back"}
 };
 function go(id){document.getElementById(id).scrollIntoView({behavior:"smooth"})}
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",2200)}
@@ -201,27 +268,106 @@ async function jget(p){const r=await fetch(API+p);return r.json()}
 async function jpost(p,b){const r=await fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)});return r.json()}
 function cache(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function uncache(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
+function doneMap(){try{return JSON.parse(localStorage.getItem("gs-done")||"{}")}catch(e){return{}}}
+
+/* Inline SVG lesson art. Each diagram is 1-2KB, zero extra requests,
+   readable on 2G and cached with the page. Rich media (video/audio URL)
+   can attach to a lesson later; this art stays as the offline fallback. */
+function artFor(id){
+ const open=(bg,inner)=>`<svg viewBox="0 0 320 180" role="img"><rect width="320" height="180" rx="16" fill="${bg}"/>${inner}</svg>`;
+ const road=`<rect x="0" y="120" width="320" height="60" fill="#124a28"/><rect x="0" y="146" width="320" height="6" fill="#faf6ef" opacity=".5"/><rect x="40" y="80" width="120" height="44" rx="8" fill="#f2a413"/><rect x="52" y="88" width="34" height="20" rx="3" fill="#fffdf6"/><rect x="92" y="88" width="34" height="20" rx="3" fill="#fffdf6"/><circle cx="70" cy="128" r="12" fill="#1c1a15"/><circle cx="70" cy="128" r="5" fill="#faf6ef"/><circle cx="132" cy="128" r="12" fill="#1c1a15"/><circle cx="132" cy="128" r="5" fill="#faf6ef"/><path d="M180 92h38M190 104h30M184 116h34" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="252" cy="52" r="16" fill="#f2a413"/><path d="M282 60q12 -10 24 0M294 60q6 -8 12 0" stroke="#124a28" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+ if(id==="c1l1") return open("#e8f0e4",road);
+ if(id==="c1l2") return open("#124a28",`<circle cx="110" cy="105" r="62" fill="none" stroke="#faf6ef" stroke-width="6" opacity=".35"/><path d="M110 105 L158 62" stroke="#f2a413" stroke-width="8" stroke-linecap="round"/><circle cx="110" cy="105" r="10" fill="#faf6ef"/><path d="M200 130h84M200 130l-14 -10M200 130l-14 10" stroke="#fff" stroke-width="6" stroke-linecap="round"/><text x="205" y="105" fill="#fff" font-size="20" font-weight="bold">v</text><text x="60" y="45" fill="#fff" font-size="18">veg ki disha</text>`);
+ if(id==="c1l3") return open("#e8f0e4",`<rect x="90" y="24" width="140" height="132" rx="10" fill="#fffdf6" stroke="#124a28" stroke-width="4"/><path d="M110 70l14 14 26 -30" stroke="#1d6b3c" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M110 112l14 14 26 -30" stroke="#1d6b3c" stroke-width="7" fill="none" stroke-linecap="round"/><rect x="160" y="128" width="52" height="10" rx="5" fill="#e5dcc8"/>`);
+ if(id==="c2l1") return open("#fdf1d7",`<rect x="150" y="30" width="20" height="110" fill="#7a5200"/><path d="M60 45h200" stroke="#7a5200" stroke-width="8" stroke-linecap="round"/><path d="M85 49l-25 55h50z" fill="none" stroke="#c4501b" stroke-width="6"/><text x="72" y="92" font-size="20" font-weight="bold" fill="#c4501b">2x</text><path d="M235 49l-25 55h50z" fill="none" stroke="#1d6b3c" stroke-width="6"/><text x="222" y="92" font-size="20" font-weight="bold" fill="#1d6b3c">11</text><rect x="120" y="140" width="80" height="12" rx="6" fill="#7a5200"/>`);
+ if(id==="c2l2") return open("#124a28",`<path d="M30 150h260" stroke="#faf6ef" stroke-width="4" opacity=".5"/><path d="M60 150 Q160 150 160 60 Q160 150 260 150" fill="none" stroke="#f2a413" stroke-width="7" stroke-linecap="round"/><circle cx="160" cy="60" r="8" fill="#fff"/><text x="40" y="45" fill="#fff" font-size="20" font-weight="bold">x = 2 ya 3</text>`);
+ if(id==="c3l1") return open("#e8f0e4",`<circle cx="110" cy="80" r="30" fill="#1d6b3c"/><rect x="80" y="112" width="60" height="44" rx="20" fill="#1d6b3c"/><rect x="160" y="50" width="120" height="26" rx="13" fill="#fffdf6" stroke="#124a28" stroke-width="3"/><rect x="160" y="84" width="90" height="22" rx="11" fill="#f2a413"/><rect x="160" y="114" width="105" height="22" rx="11" fill="#fffdf6" stroke="#124a28" stroke-width="3"/>`);
+ return open("#fdf1d7",`<rect x="40" y="40" width="240" height="26" rx="6" fill="#c4501b"/><path d="M40 66l20 22 20 -22 20 22 20 -22 20 22 20 -22 20 22 20 -22 20 22 20 -22 20 22 20 -22" fill="none" stroke="#faf6ef" stroke-width="4"/><rect x="70" y="100" width="180" height="56" rx="8" fill="#fffdf6" stroke="#124a28" stroke-width="4"/><text x="92" y="134" font-size="19" font-weight="bold" fill="#124a28">How much?</text>`);
+}
+function coverFor(cid){
+ if(cid==="c1") return artFor("c1l1");
+ if(cid==="c2") return artFor("c2l2");
+ return artFor("c3l2");
+}
+
+let COURSES=[];
 async function loadCourses(){
  let d=uncache("gs-courses-"+LANG);
  try{d=await jget("/api/courses?lang="+LANG);cache("gs-courses-"+LANG,d)}catch(e){if(!d){document.getElementById("courses").innerHTML="Offline aur cache khali hai. Ek baar online kholo.";return}}
- document.getElementById("courses").innerHTML=d.courses.map(c=>`<div class="card"><span class="chip">${c.subject} · Class ${c.level}</span><h3 style="margin-top:8px">${c.title}</h3><p>${c.desc}</p><div class="meta">${c.lessons.map(l=>`<span>${l.title} · ${l.minutes}min · ${l.size_kb}KB</span>`).join("")}</div><div class="row">${c.lessons.map(l=>`<button class="btn btn-ghost" onclick="openLesson('${l.id}','${l.title.replace(/'/g,"")}')">${l.title}</button>`).join("")}</div></div>`).join("");
+ COURSES=d.courses;
+ const done=doneMap();
+ document.getElementById("courses").innerHTML=d.courses.map(c=>{
+  const totalMin=c.lessons.reduce((a,l)=>a+l.minutes,0), totalKb=c.lessons.reduce((a,l)=>a+l.size_kb,0);
+  const ndone=c.lessons.filter(l=>done[l.id]).length, pct=Math.round(100*ndone/c.lessons.length);
+  const next=c.lessons.find(l=>!done[l.id])||c.lessons[0];
+  return `<div class="course"><span class="course-cover">${coverFor(c.id)}</span><div class="course-body">`
+  +`<span class="chip">${c.subject} · Class ${c.level}</span><h3>${c.title}</h3><p class="desc">${c.desc}</p>`
+  +`<div class="course-meta">${c.lessons.length} lessons · ${totalMin} min · ${totalKb}KB total</div>`
+  +`<div class="prow"><div class="pbar" style="flex:1"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>`
+  +`<div class="row"><button class="btn btn-primary" onclick="openLesson('${next.id}')">${ndone?"Jari rakho":"Shuru karo"}</button>`
+  +`<button class="btn btn-ghost" onclick="openCourseList('${c.id}')">Pathyakram</button></div></div></div>`;
+ }).join("");
 }
-async function openLesson(id,title){
+function openCourseList(cid){
+ const c=COURSES.find(x=>x.id===cid);if(!c)return;
+ openLesson(c.lessons[0].id);
+}
+
+/* Fullscreen viewer state */
+let V_LESSON=null, V_LIST=[];
+async function openLesson(id){
+ let c=COURSES.find(x=>x.lessons.some(l=>l.id===id));
+ if(c) V_LIST=c.lessons.map(l=>l.id);
  let d=uncache("gs-lesson-"+id+"-"+LANG);
  try{d=await jget("/api/lesson/"+id+"?lang="+LANG);cache("gs-lesson-"+id+"-"+LANG,d)}catch(e){}
  if(!d||d.error){toast("Lesson cache me nahi, online kholo");return}
- const v=document.getElementById("lessonView");v.style.display="block";
- v.innerHTML=`<span class="chip sun">${d.course}</span><h3 style="margin-top:8px">${d.title} · ${d.minutes} min · ${d.size_kb}KB</h3><p>${d.body}</p><div class="row"><button class="btn btn-ghost" onclick="hearText(\`${d.body.replace(/`/g,"")}\`)">🔊 Suno</button><button class="btn btn-ghost" onclick="document.getElementById('lessonView').style.display='none'">Band karo</button></div>`;
- v.scrollIntoView({behavior:"smooth",block:"center"});
+ V_LESSON=d;
+ renderViewer();
+ document.getElementById("viewer").classList.add("open");
+ document.body.style.overflow="hidden";
 }
+function renderViewer(){
+ const d=V_LESSON;if(!d)return;
+ const done=doneMap();
+ const idx=V_LIST.indexOf(d.id);
+ const total=V_LIST.length||1;
+ document.getElementById("vTitle").textContent=d.title;
+ document.getElementById("vSub").textContent=d.course+" · "+(idx+1)+"/"+total+" · "+d.minutes+" min · "+d.size_kb+"KB";
+ document.getElementById("vProg").style.width=Math.round(100*(idx+1)/total)+"%";
+ document.getElementById("vCourse").textContent=d.course;
+ document.getElementById("vHead").textContent=d.title;
+ document.getElementById("vBody").textContent=d.body;
+ document.getElementById("vArt").innerHTML=artFor(d.art||d.id);
+ document.getElementById("vPoints").innerHTML=(d.points||[]).map(p=>`<li>${p}</li>`).join("");
+ document.getElementById("vData").textContent="Text + diagram: "+d.size_kb+"KB. Video aane par yahi player video dikhayega, text fallback bana rahega.";
+ document.getElementById("vDone").textContent=done[d.id]?"✓ Poora ho gaya":"✓ Yaad ho gaya";
+ document.getElementById("vPrev").disabled=idx<=0;
+ document.getElementById("vNext").disabled=idx>=total-1;
+ document.querySelector(".viewer-body").scrollTop=0;
+}
+function closeViewer(){document.getElementById("viewer").classList.remove("open");document.body.style.overflow="";loadCourses()}
+function stepLesson(n){
+ const i=V_LIST.indexOf(V_LESSON.id)+n;
+ if(i<0||i>=V_LIST.length)return;
+ openLesson(V_LIST[i]);
+}
+function markDone(){
+ const m=doneMap();m[V_LESSON.id]=!m[V_LESSON.id];
+ try{localStorage.setItem("gs-done",JSON.stringify(m))}catch(e){}
+ renderViewer();toast(m[V_LESSON.id]?"Shabash! Progress save ho gaya":"Wapas khol diya");
+}
+function hearLesson(){if(V_LESSON)hearText(V_LESSON.body+" "+(V_LESSON.points||[]).join(" "))}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.getElementById("viewer").classList.contains("open"))closeViewer()});
+
 let lastAnswer="";
 async function askDoubt(){
  const q=document.getElementById("doubtQ").value.trim();if(!q)return;
  const box=document.getElementById("doubtA");box.style.display="block";box.textContent="Sarthi soch raha hai...";
- try{const d=await jpost("/api/doubt",{question:q,lang:LANG});lastAnswer=d.answer;box.textContent=d.answer;document.getElementById("hearBtn").style.display="inline-block"}catch(e){box.textContent="Server band hai (localhost:8000 chalao)."}
+ try{const d=await jpost("/api/doubt",{question:q,lang:LANG});lastAnswer=d.answer;box.textContent=d.answer;document.getElementById("hearBtn").style.display="inline-block"}catch(e){box.textContent="Server se sampark nahi ho raha."}
 }
-async function askHero(){const q=document.getElementById("heroQ").value.trim()||"Newton ka niyam kya hai?";document.getElementById("doubtQ").value=q;go("saarthi");askDoubt();
+async function askHero(){const q=document.getElementById("heroQ").value.trim()||"Newton ka niyam kya hai?";
  try{const d=await jpost("/api/doubt",{question:q,lang:LANG});const h=document.getElementById("heroA");h.style.display="block";h.textContent=d.answer}catch(e){}}
+function micHero(){document.getElementById("doubtQ").value=document.getElementById("heroQ").value;go("saarthi");speak()}
 function speak(){
  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
  if(!SR){toast("Is browser me voice nahi, likhkar puchho");return}
@@ -238,7 +384,7 @@ async function checkSch(){
  const body={class12_pct:+document.getElementById("fPct").value||0,board:document.getElementById("fBoard").value,income_lakh:+document.getElementById("fInc").value||0,category:document.getElementById("fCat").value,gender:document.getElementById("fGen").value,rural:document.getElementById("fRural").classList.contains("on"),lang:LANG};
  try{const d=await jpost("/api/scholarships/check",body);
  document.getElementById("schOut").innerHTML=d.results.map(r=>`<div class="card ${r.eligible?"eligible":"noteligible"}" style="margin-bottom:10px"><h3>${r.eligible?"✓":"○"} ${r.name}</h3><p>${r.amount} · ${r.portal}</p><p style="font-size:13px">${r.reason}</p></div>`).join("");
- document.getElementById("schOut").scrollIntoView({behavior:"smooth",block:"center"})}catch(e){toast("Server band hai")}
+ document.getElementById("schOut").scrollIntoView({behavior:"smooth",block:"center"})}catch(e){toast("Server se sampark nahi ho raha")}
 }
 const QUIZ=["kheti","bijli / machine","padhana / bachche","hospital / seva","sarkari naukri","computer"];
 let picked=new Set();
@@ -247,7 +393,7 @@ function toggleQ(q){picked.has(q)?picked.delete(q):picked.add(q);renderQuiz()}
 async function quiz(){
  if(!picked.size){toast("Pehle 1-2 ruchi chuno");return}
  try{const d=await jpost("/api/career/quiz",{interests:[...picked].join(" "),qualification:"12th",lang:LANG});
- document.getElementById("quizOut").innerHTML="<div class='grid3' style='margin-top:12px'>"+d.recommendations.map((r,i)=>`<div class="card ${i===0?"eligible":""}"><span class="chip">${i===0?"Sabse sahi":"Vikalp "+(i+1)}</span><h3 style="margin-top:8px">${r.title}</h3><p>${r.desc}</p></div>`).join("")+"</div>"}catch(e){toast("Server band hai")}
+ document.getElementById("quizOut").innerHTML="<div class='grid3' style='margin-top:12px'>"+d.recommendations.map((r,i)=>`<div class="card ${i===0?"eligible":""}"><span class="chip">${i===0?"Sabse sahi":"Vikalp "+(i+1)}</span><h3 style="margin-top:8px">${r.title}</h3><p>${r.desc}</p></div>`).join("")+"</div>"}catch(e){toast("Server se sampark nahi ho raha")}
 }
 async function loadMentors(){
  let d=uncache("gs-men-"+LANG);try{d=await jget("/api/mentors?lang="+LANG);cache("gs-men-"+LANG,d)}catch(e){}
@@ -257,7 +403,7 @@ async function loadMentors(){
 async function bookM(id){
  const name=(document.getElementById("n-"+id).value||"").trim(),topic=(document.getElementById("t-"+id).value||"").trim();
  if(name.length<2||topic.length<2){toast("Naam aur vishay likho");return}
- try{const d=await jpost("/api/mentors/book",{mentor_id:id,name,topic});toast(d.message||"Booking pakki!")}catch(e){toast("Server band hai")}
+ try{const d=await jpost("/api/mentors/book",{mentor_id:id,name,topic});toast(d.message||"Booking pakki!")}catch(e){toast("Server se sampark nahi ho raha")}
 }
 function loadAll(){applyT();renderQuiz();loadCourses();loadSch();loadMentors()}
 loadAll();

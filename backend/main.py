@@ -13,7 +13,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from .seed import CAREERS, COURSES, DOUBTS, MENTORS, SCHOLARSHIPS
+from .seed import CAREERS, COURSES, DOUBTS, MENTORS, POINTS, SCHOLARSHIPS
 
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
 
@@ -102,6 +102,7 @@ def lesson(lesson_id: str, lang: str = "hi"):
     for c in COURSES:
         for l in c["lessons"]:
             if l["id"] == lesson_id:
+                pts = POINTS.get(lesson_id, {})
                 return {
                     "id": l["id"],
                     "course_id": c["id"],
@@ -110,6 +111,8 @@ def lesson(lesson_id: str, lang: str = "hi"):
                     "minutes": l["minutes"],
                     "size_kb": l["size_kb"],
                     "body": pick(l["body"], lang),
+                    "points": pts.get(lang, pts.get("hi", [])),
+                    "art": l["id"],
                 }
     return {"error": "not found"}
 
