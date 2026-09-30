@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GramSetu, Ask Sarthi for Rural Students</title>
+<style>
+:root{
+  --paper:#faf6ef; --ink:#1c1a15; --muted:#6b6455;
+  --leaf:#1d6b3c; --leaf-deep:#124a28; --sun:#f2a413; --clay:#c4501b;
+  --card:#ffffff; --line:#e5dcc8; --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans Devanagari","Mukta",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+/* NAV */
+.nav{position:sticky;top:0;z-index:20;background:rgba(250,246,239,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:12px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+.brand-mark{width:34px;height:34px;border-radius:10px;background:var(--leaf);color:#fff;display:grid;place-items:center;font-size:19px}
+.nav-links{display:flex;gap:4px;margin-left:8px}
+.nav-links a{color:var(--ink);text-decoration:none;font-size:14px;padding:8px 10px;border-radius:9px}
+.nav-links a:hover{background:#efe7d3}
+.nav-right{margin-left:auto;display:flex;gap:8px;align-items:center}
+select,.btn{font:inherit}
+.langsel{border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:#fff}
+.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--leaf);color:#fff}
+.btn-primary:active{transform:scale(.98)}
+.btn-sun{background:var(--sun);color:#2a1d00}
+.btn-ghost{background:transparent;border:1px solid var(--line)}
+.offline-pill{font-size:12px;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:#fff}
+.offline-pill.off{background:#fdeaea;border-color:#e5b4b4;color:#a33}
+/* HERO asymmetric split */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center;padding:40px 0 8px;min-height:calc(100dvh - 64px);align-content:center}
+.kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--leaf);font-weight:800}
+h1{font-size:44px;line-height:1.05;letter-spacing:-.02em;margin:10px 0 12px}
+h1 .it{font-style:italic;color:var(--leaf-deep)}
+.sub{font-size:17px;color:#4c4739;line-height:1.6;max-width:46ch;margin:0 0 18px}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.trust{display:flex;gap:18px;margin-top:16px;color:var(--muted);font-size:13px}
+.trust b{color:var(--ink)}
+.hero-art{background:var(--leaf-deep);border-radius:20px;color:#fff;padding:26px;position:relative;overflow:hidden}
+.hero-art::after{content:"";position:absolute;inset:auto -60px -90px auto;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,var(--sun) 0 34%,transparent 35%)}
+.lesson-card{background:#fffdf6;border:1px solid #ffffff22;border-radius:12px;padding:14px;margin:10px 0;color:#20301f;position:relative;z-index:1}
+.lesson-card small{color:#5c6b58}
+.voicebar{display:flex;gap:8px;margin-top:12px;position:relative;z-index:1}
+.voicebar input{flex:1;border:0;border-radius:10px;padding:12px;font:inherit}
+.voicebar button{border:0;border-radius:10px;padding:0 14px;font-size:18px;background:var(--sun);cursor:pointer}
+/* SECTIONS */
+section.block{padding:44px 0}
+.sec-head h2{font-size:30px;letter-spacing:-.02em;margin:0 0 6px}
+.sec-head p{color:var(--muted);margin:0 0 18px;max-width:62ch;line-height:1.6}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.card h3{margin:0 0 6px;font-size:17px}
+.card p{margin:0 0 12px;color:#57503f;font-size:14px;line-height:1.6}
+.meta{font-size:12px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.chip{display:inline-block;background:#eef4ec;border:1px solid #cfdfcd;color:var(--leaf-deep);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+.chip.sun{background:#fdf1d7;border-color:#f0d48a;color:#7a5200}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input,textarea{font:inherit;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;width:100%}
+label{font-size:13px;font-weight:700;display:block;margin:10px 0 4px}
+.answer{background:#f2f7f0;border:1px solid #cbdfc9;border-radius:12px;padding:14px;margin-top:12px;line-height:1.65}
+.eligible{border-left:5px solid var(--leaf)}
+.noteligible{border-left:5px solid #c9c2ae;opacity:.92}
+details{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px 14px;margin:8px 0}
+summary{font-weight:700;cursor:pointer}
+.quiz-opt{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;cursor:pointer;font-size:14px}
+.quiz-opt.on{background:var(--leaf);color:#fff;border-color:var(--leaf)}
+.foot{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--muted);font-size:13px;line-height:1.7}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#1c1a15;color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;display:none;z-index:50}
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:28px}
+  h1{font-size:34px}
+  .grid3,.grid2{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="nav"><div class="wrap nav-in">
+  <div class="brand"><span class="brand-mark">ज्ञा</span> GramSetu <span style="font-weight:400;color:var(--muted);font-size:13px">Ask Sarthi</span></div>
+  <nav class="nav-links">
+    <a href="#padhai" data-t="navCourses">पढ़ाई</a>
+    <a href="#saarthi" data-t="navDoubt">सारथी से पूछो</a>
+    <a href="#scholar" data-t="navScholar">छात्रवृत्ति</a>
+    <a href="#career" data-t="navCareer">करियर</a>
+    <a href="#mentor" data-t="navMentor">मेंटोर</a>
+  </nav>
+  <div class="nav-right">
+    <span class="offline-pill" id="netpill">● Online</span>
+    <select class="langsel" id="lang"><option value="hi">हिन्दी</option><option value="hinglish">Hinglish</option><option value="en">English</option></select>
+  </div>
+</div></div>
+
+<div class="wrap">
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="kicker" data-t="kicker">MP ke grameen students ke liye</div>
+      <h1><span data-t="h1a">Bina internet rukawat ke,</span> <span class="it" data-t="h1b">apni bhasha me padhai.</span></h1>
+      <p class="sub" data-t="sub">Offline-first lessons, bolkar sawal puchhne wala AI Sarthi, scholarship checker aur career roadmap. 2G par bhi chale, Hindi, Hinglish aur English me.</p>
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="go('padhai')" data-t="cta1">Muft padhai shuru karo</button>
+        <button class="btn btn-ghost" onclick="go('scholar')" data-t="cta2">Scholarship check karo</button>
+      </div>
+      <div class="trust"><span><b>3</b> <span data-t="t1">courses offline</span></span><span><b>6</b> <span data-t="t2">MP scholarships</span></span><span><b>&lt;20KB</b> <span data-t="t3">prati lesson</span></span></div>
+    </div>
+    <div class="hero-art">
+      <div style="font-weight:800;font-size:15px">Sarthi live demo</div>
+      <div style="opacity:.8;font-size:13px">Bolo ya likho, jawab turant</div>
+      <div class="lesson-card"><small>Physics, Class 12</small><div><b>Gati kya hai?</b> Jab vastu jagah badle...</div></div>
+      <div class="lesson-card"><small>Scholarship</small><div><b>MMVY:</b> 12th me 70% + aay 6L tak, poori fees</div></div>
+      <div class="voicebar"><input id="heroQ" placeholder="Sawal bolo ya likho..."><button onclick="askHero()" title="Bolo">🎙</button><button onclick="askHero()" style="background:#fff" title="Puchho">➤</button></div>
+      <div class="answer" id="heroA" style="display:none;background:#fffdf6"></div>
+    </div>
+  </div>
+
+  <!-- COURSES -->
+  <section class="block" id="padhai">
+    <div class="sec-head"><h2 data-t="coursesH">Offline-first padhai</h2>
+    <p data-t="coursesP">Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota hai aur phone me save rehta hai.</p></div>
+    <div class="grid3" id="courses"></div>
+    <div class="card" id="lessonView" style="display:none;margin-top:14px"></div>
+  </section>
+
+  <!-- DOUBT -->
+  <section class="block" id="saarthi">
+    <div class="sec-head"><h2 data-t="doubtH">Sarthi se puchho</h2>
+    <p data-t="doubtP">Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.</p></div>
+    <div class="card">
+      <div class="row"><input id="doubtQ" placeholder="Apna sawal likho, jaise: Newton ka niyam kya hai?"><button class="btn btn-primary" onclick="askDoubt()" data-t="ask">Puchho</button>
+      <button class="btn btn-sun" id="micBtn" onclick="speak()" title="Bolkar puchho">🎙 Bolo</button>
+      <button class="btn btn-ghost" id="hearBtn" onclick="hear()" style="display:none">🔊 Suno</button></div>
+      <div class="answer" id="doubtA" style="display:none"></div>
+    </div>
+  </section>
+
+  <!-- SCHOLARSHIP -->
+  <section class="block" id="scholar">
+    <div class="sec-head"><h2 data-t="schH">Kaunsi scholarship milegi?</h2>
+    <p data-t="schP">Apne number aur parivar ki sthiti batao. Hum 6 MP sarkari yojnaon me eligibility turant batayenge, sath me kagaz ki list.</p></div>
+    <div class="grid2">
+      <div class="card">
+        <label data-t="fPct">12vi me kitne %?</label><input id="fPct" type="number" value="72">
+        <label>Board</label><select id="fBoard" class="langsel" style="width:100%"><option value="mp">MP Board</option><option value="cbse">CBSE</option><option value="icse">ICSE</option></select>
+        <label data-t="fInc">Parivar ki saalana aay (lakh me)</label><input id="fInc" type="number" value="2">
+        <label>Category</label><select id="fCat" class="langsel" style="width:100%"><option value="general">General</option><option value="sc">SC</option><option value="st">ST</option><option value="obc">OBC</option></select>
+        <div class="row" style="margin-top:12px">
+          <select id="fGen" class="langsel"><option value="">Gender</option><option value="female">Beti</option><option value="male">Beta</option></select>
+          <button class="quiz-opt" id="fRural" onclick="this.classList.toggle('on')">Grameen</button>
+          <button class="btn btn-primary" onclick="checkSch()" data-t="check">Check karo</button>
+        </div>
+      </div>
+      <div id="schOut"><div class="card"><p data-t="schHint">Left me jankari bharo, yahan natija aayega.</p></div></div>
+    </div>
+    <div id="schList"></div>
+  </section>
+
+  <!-- CAREER -->
+  <section class="block" id="career">
+    <div class="sec-head"><h2 data-t="carH">12vi ke baad kya?</h2>
+    <p data-t="carP">Apni ruchi chuno, hum MP ke liye sahi 3 raste sujhayenge.</p></div>
+    <div class="card">
+      <div class="row" id="quizOpts"></div>
+      <div style="margin-top:12px" class="row"><button class="btn btn-primary" onclick="quiz()" data-t="suggest">Raste dikhao</button></div>
+      <div id="quizOut"></div>
+    </div>
+  </section>
+
+  <!-- MENTOR -->
+  <section class="block" id="mentor">
+    <div class="sec-head"><h2 data-t="menH">Digital mentoring</h2>
+    <p data-t="menP">MP ke hi didi-bhaiya se baat karo. Naam aur vishay likho, booking pakki.</p></div>
+    <div class="grid3" id="mentors"></div>
+  </section>
+
+  <div class="foot">GramSetu (Ask Sarthi) hackathon MVP. Scholarship jankari 2026 ke niyamon par adharit saransh hai, aavedan hamesha <b>hescholarship.mp.gov.in</b> par janchkar karo. Low-bandwidth demo: poora page 1 request me, API text-only.</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const API = location.hostname ? "http://localhost:8000" : "http://localhost:8000";
+let LANG = localStorage.getItem("gs-lang") || "hi";
+document.getElementById("lang").value = LANG;
+const T = {
+ hi:{navCourses:"पढ़ाई",navDoubt:"सारथी से पूछो",navScholar:"छात्रवृत्ति",navCareer:"करियर",navMentor:"मेंटोर",kicker:"MP ke grameen students ke liye",h1a:"Bina internet rukawat ke,",h1b:"apni bhasha me padhai.",sub:"Offline-first lessons, bolkar sawal puchhne wala AI Sarthi, scholarship checker aur career roadmap. 2G par bhi chale, Hindi, Hinglish aur English me.",cta1:"Muft padhai shuru karo",cta2:"Scholarship check karo",t1:"courses offline",t2:"MP scholarships",t3:"prati lesson",coursesH:"Offline-first padhai",coursesP:"Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota hai aur phone me save rehta hai.",doubtH:"Sarthi se puchho",doubtP:"Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.",ask:"Puchho",schH:"Kaunsi scholarship milegi?",schP:"Apne number aur parivar ki sthiti batao. Hum 6 MP sarkari yojnaon me eligibility turant batayenge, sath me kagaz ki list.",fPct:"12vi me kitne %?",fInc:"Parivar ki saalana aay (lakh me)",check:"Check karo",schHint:"Left me jankari bharo, yahan natija aayega.",carH:"12vi ke baad kya?",carP:"Apni ruchi chuno, hum MP ke liye sahi 3 raste sujhayenge.",suggest:"Raste dikhao",menH:"Digital mentoring",menP:"MP ke hi didi-bhaiya se baat karo. Naam aur vishay likho, booking pakki."},
+ hinglish:{navCourses:"Padhai",navDoubt:"Sarthi se puchho",navScholar:"Scholarship",navCareer:"Career",navMentor:"Mentor",kicker:"MP ke rural students ke liye",h1a:"Bina internet rukawat ke,",h1b:"apni bhasha me padhai.",sub:"Offline-first lessons, bolkar sawal puchhne wala AI Sarthi, scholarship checker aur career roadmap. 2G par bhi chale, Hindi, Hinglish aur English me.",cta1:"Free padhai start karo",cta2:"Scholarship check karo",t1:"courses offline",t2:"MP scholarships",t3:"per lesson",coursesH:"Offline-first padhai",coursesP:"Ek baar kholo, phir bina internet ke padho. Har lesson 20KB se chhota, phone me save rehta hai.",doubtH:"Sarthi se puchho",doubtP:"Physics, Maths, English, scholarship ya career. Mic dabao aur bolo, jawab suno bhi.",ask:"Puchho",schH:"Kaunsi scholarship milegi?",schP:"Apne marks aur family situation batao. 6 MP sarkari schemes me eligibility turant, documents list ke saath.",fPct:"12th me kitne %?",fInc:"Family yearly income (lakh me)",check:"Check karo",schHint:"Left me details bharo, result yahan aayega.",carH:"12th ke baad kya?",carP:"Apni interest chuno, MP ke liye best 3 options payo.",suggest:"Options dikhao",menH:"Digital mentoring",menP:"MP ke seniors se baat karo. Naam aur topic likho, booking done."},
+ en:{navCourses:"Courses",navDoubt:"Ask Sarthi",navScholar:"Scholarships",navCareer:"Careers",navMentor:"Mentors",kicker:"For rural MP students",h1a:"Study without internet breaks,",h1b:"in your own language.",sub:"Offline-first lessons, voice AI Sarthi for doubts, scholarship checker and career roadmaps. Works on 2G, in Hindi, Hinglish and English.",cta1:"Start learning free",cta2:"Check scholarship",t1:"courses offline",t2:"MP scholarships",t3:"per lesson",coursesH:"Offline-first learning",coursesP:"Open once, study without internet after. Every lesson under 20KB, saved on the phone.",doubtH:"Ask Sarthi",doubtP:"Physics, Maths, English, scholarships or careers. Tap mic, speak, and listen to the answer.",ask:"Ask",schH:"Which scholarship fits you?",schP:"Tell us your marks and family situation. Instant eligibility across 6 MP schemes, with document lists.",fPct:"Class 12 %?",fInc:"Family yearly income (in lakh)",check:"Check",schHint:"Fill details on the left, results appear here.",carH:"What after Class 12?",carP:"Pick your interests, get 3 right paths for MP.",suggest:"Show paths",menH:"Digital mentoring",menP:"Talk to seniors from MP. Write name and topic, booking confirmed."}
+};
+function go(id){document.getElementById(id).scrollIntoView({behavior:"smooth"})}
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",2200)}
+function setNet(){const p=document.getElementById("netpill");const off=!navigator.onLine;p.textContent=off?"● Offline, saved content chalega":"● Online";p.classList.toggle("off",off)}
+window.addEventListener("online",setNet);window.addEventListener("offline",setNet);setNet();
+document.getElementById("lang").onchange=e=>{LANG=e.target.value;localStorage.setItem("gs-lang",LANG);applyT();loadAll()};
+function applyT(){document.querySelectorAll("[data-t]").forEach(el=>{const k=el.dataset.t;if(T[LANG][k])el.textContent=T[LANG][k]})}
+async function jget(p){const r=await fetch(API+p);return r.json()}
+async function jpost(p,b){const r=await fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)});return r.json()}
+function cache(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function uncache(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
+async function loadCourses(){
+ let d=uncache("gs-courses-"+LANG);
+ try{d=await jget("/api/courses?lang="+LANG);cache("gs-courses-"+LANG,d)}catch(e){if(!d){document.getElementById("courses").innerHTML="Offline aur cache khali hai. Ek baar online kholo.";return}}
+ document.getElementById("courses").innerHTML=d.courses.map(c=>`<div class="card"><span class="chip">${c.subject} · Class ${c.level}</span><h3 style="margin-top:8px">${c.title}</h3><p>${c.desc}</p><div class="meta">${c.lessons.map(l=>`<span>${l.title} · ${l.minutes}min · ${l.size_kb}KB</span>`).join("")}</div><div class="row">${c.lessons.map(l=>`<button class="btn btn-ghost" onclick="openLesson('${l.id}','${l.title.replace(/'/g,"")}')">${l.title}</button>`).join("")}</div></div>`).join("");
+}
+async function openLesson(id,title){
+ let d=uncache("gs-lesson-"+id+"-"+LANG);
+ try{d=await jget("/api/lesson/"+id+"?lang="+LANG);cache("gs-lesson-"+id+"-"+LANG,d)}catch(e){}
+ if(!d||d.error){toast("Lesson cache me nahi, online kholo");return}
+ const v=document.getElementById("lessonView");v.style.display="block";
+ v.innerHTML=`<span class="chip sun">${d.course}</span><h3 style="margin-top:8px">${d.title} · ${d.minutes} min · ${d.size_kb}KB</h3><p>${d.body}</p><div class="row"><button class="btn btn-ghost" onclick="hearText(\`${d.body.replace(/`/g,"")}\`)">🔊 Suno</button><button class="btn btn-ghost" onclick="document.getElementById('lessonView').style.display='none'">Band karo</button></div>`;
+ v.scrollIntoView({behavior:"smooth",block:"center"});
+}
+let lastAnswer="";
+async function askDoubt(){
+ const q=document.getElementById("doubtQ").value.trim();if(!q)return;
+ const box=document.getElementById("doubtA");box.style.display="block";box.textContent="Sarthi soch raha hai...";
+ try{const d=await jpost("/api/doubt",{question:q,lang:LANG});lastAnswer=d.answer;box.textContent=d.answer;document.getElementById("hearBtn").style.display="inline-block"}catch(e){box.textContent="Server band hai (localhost:8000 chalao)."}
+}
+async function askHero(){const q=document.getElementById("heroQ").value.trim()||"Newton ka niyam kya hai?";document.getElementById("doubtQ").value=q;go("saarthi");askDoubt();
+ try{const d=await jpost("/api/doubt",{question:q,lang:LANG});const h=document.getElementById("heroA");h.style.display="block";h.textContent=d.answer}catch(e){}}
+function speak(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){toast("Is browser me voice nahi, likhkar puchho");return}
+ const r=new SR();r.lang=LANG==="en"?"en-IN":"hi-IN";r.onresult=e=>{document.getElementById("doubtQ").value=e.results[0][0].transcript;askDoubt()};r.start();toast("Bolo, sun rahe hain...");
+}
+function hear(){if(lastAnswer)hearText(lastAnswer)}
+function hearText(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=LANG==="en"?"en-IN":"hi-IN";speechSynthesis.speak(u)}catch(e){toast("Voice support nahi")}}
+async function loadSch(){
+ let d=uncache("gs-sch-"+LANG);try{d=await jget("/api/scholarships?lang="+LANG);cache("gs-sch-"+LANG,d)}catch(e){}
+ if(!d)return;
+ document.getElementById("schList").innerHTML="<div class='grid3' style='margin-top:14px'>"+d.scholarships.map(s=>`<details><summary>${s.name} · ${s.amount}</summary><p><b>Portal:</b> ${s.portal}</p><p><b>Chahiye:</b> ${s.need.join(" | ")}</p><p><b>Kagaz:</b> ${s.docs.join(" | ")}</p></details>`).join("")+"</div>";
+}
+async function checkSch(){
+ const body={class12_pct:+document.getElementById("fPct").value||0,board:document.getElementById("fBoard").value,income_lakh:+document.getElementById("fInc").value||0,category:document.getElementById("fCat").value,gender:document.getElementById("fGen").value,rural:document.getElementById("fRural").classList.contains("on"),lang:LANG};
+ try{const d=await jpost("/api/scholarships/check",body);
+ document.getElementById("schOut").innerHTML=d.results.map(r=>`<div class="card ${r.eligible?"eligible":"noteligible"}" style="margin-bottom:10px"><h3>${r.eligible?"✓":"○"} ${r.name}</h3><p>${r.amount} · ${r.portal}</p><p style="font-size:13px">${r.reason}</p></div>`).join("");
+ document.getElementById("schOut").scrollIntoView({behavior:"smooth",block:"center"})}catch(e){toast("Server band hai")}
+}
+const QUIZ=["kheti","bijli / machine","padhana / bachche","hospital / seva","sarkari naukri","computer"];
+let picked=new Set();
+function renderQuiz(){document.getElementById("quizOpts").innerHTML=QUIZ.map(q=>`<button class="quiz-opt ${picked.has(q)?"on":""}" onclick="toggleQ('${q}')">${q}</button>`).join("")}
+function toggleQ(q){picked.has(q)?picked.delete(q):picked.add(q);renderQuiz()}
+async function quiz(){
+ if(!picked.size){toast("Pehle 1-2 ruchi chuno");return}
+ try{const d=await jpost("/api/career/quiz",{interests:[...picked].join(" "),qualification:"12th",lang:LANG});
+ document.getElementById("quizOut").innerHTML="<div class='grid3' style='margin-top:12px'>"+d.recommendations.map((r,i)=>`<div class="card ${i===0?"eligible":""}"><span class="chip">${i===0?"Sabse sahi":"Vikalp "+(i+1)}</span><h3 style="margin-top:8px">${r.title}</h3><p>${r.desc}</p></div>`).join("")+"</div>"}catch(e){toast("Server band hai")}
+}
+async function loadMentors(){
+ let d=uncache("gs-men-"+LANG);try{d=await jget("/api/mentors?lang="+LANG);cache("gs-men-"+LANG,d)}catch(e){}
+ if(!d)return;
+ document.getElementById("mentors").innerHTML=d.mentors.map(m=>`<div class="card"><h3>${m.name}</h3><p>${m.role}</p><div class="meta">${m.tags.map(t=>`<span class="chip">${t}</span>`).join("")}</div><label>Apna naam</label><input id="n-${m.id}" placeholder="Naam"><label>Kis vishay par?</label><input id="t-${m.id}" placeholder="jaise: ITI me admission"><div style="margin-top:10px"><button class="btn btn-primary" onclick="bookM('${m.id}')">Booking pakki karo</button></div></div>`).join("");
+}
+async function bookM(id){
+ const name=(document.getElementById("n-"+id).value||"").trim(),topic=(document.getElementById("t-"+id).value||"").trim();
+ if(name.length<2||topic.length<2){toast("Naam aur vishay likho");return}
+ try{const d=await jpost("/api/mentors/book",{mentor_id:id,name,topic});toast(d.message||"Booking pakki!")}catch(e){toast("Server band hai")}
+}
+function loadAll(){applyT();renderQuiz();loadCourses();loadSch();loadMentors()}
+loadAll();
+</script>
+</body>
+</html>
