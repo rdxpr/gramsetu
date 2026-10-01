@@ -124,21 +124,58 @@ GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
 
 
-def _gemini_answer(question: str, lang: str) -> str | None:
-    """Ask Gemini Flash for a short rural-student-friendly answer.
+def _grounding_text() -> str:
+    """Compact fact base fed to the LLM so answers stay grounded.
 
-    Returns None when no key is configured or the call fails, so the
-    caller can fall back to the offline keyword answers. stdlib only,
-    no new dependency.
+    Built from the same seed the keyword fallback and UI use, so the
+    LLM and offline answers never contradict each other.
+    """
+    lines = []
+    for c in COURSES:
+        titles = " / ".join({c["title"].get(k, "") for k in ("hi", "en", "hinglish")})
+        lines.append(f"Course {c['id']}: {titles} (Class {c['level']}).")
+        for le in c["lessons"]:
+            lt = " / ".join({le["title"].get(k, "") for k in ("hi", "en", "hinglish")})
+            lines.append(f"  Lesson {le['id']}: {lt}.")
+    for s in SCHOLARSHIPS:
+        need_en = " | ".join(s["need"]["en"])
+        docs_en = " | ".join(s["docs"]["en"])
+        crit = ", ".join(f"{k}={v}" for k, v in s.get("criteria", {}).items())
+        lines.append(f"Scholarship {s['id']}: {s['name']['en']}. Amount: {s['amount']['en']}. Portal: {s['portal']}. Rules: {crit}. Needs: {need_en}. Docs: {docs_en}.")
+    for c in CAREERS:
+        lines.append(f"Career {c['id']}: {c['title']['en']}. {c['desc']['en']}")
+    for d in DOUBTS:
+        lines.append(f"Fact: {d['answer']['en']} (keywords: {', '.join(d['keys'][:6])})")
+    return "\n".join(lines)
+
+
+def _sarthi_system(lang: str) -> str:
+    lang_name = (
+        "Hindi (Devanagari)" if lang == "hi" else "Hinglish (Roman Hindi)" if lang == "hinglish" else "simple English"
+    )
+    return (
+        "You are Sarthi, a tutor for rural MP students (Classes 9 to 12, Hindi/Hinglish/English, often on 2G phones). "
+        f"Always answer in {lang_name}.\n"
+        "INSTRUCTIONS:\n"
+        "1. Primary method is your own answer, but stay grounded in SOURCES below. For scholarships use ONLY the portal, amounts, percentages and income limits given there. Never invent a scheme, amount, or deadline.\n"
+        "2. For studies (Motion, Algebra, English) explain in 2 to 4 short sentences plus one small everyday example, under 100 words total. Plain text, no markdown, no bullet symbols.\n"
+        "3. If the question is outside your sources or you are unsure, say so in one line and point to the closest lesson, the teacher, or hescholarship.mp.gov.in.\n"
+        "4. Never claim to book, apply, or pay for anything. Booking and forms happen in the app.\n"
+        "SOURCES (same facts the app shows offline):\n" + _grounding_text()
+    )
+
+
+def _gemini_answer(question: str, lang: str) -> str | None:
+    """Ask Gemini Flash with a grounded system prompt.
+
+    Returns None when no key is configured or the call fails (no
+    internet, bad key, timeout), so the caller can fall back to the
+    offline keyword answers. stdlib only, no new dependency.
     """
     if not GEMINI_KEY:
         return None
-    sys = (
-        "You are Sarthi, a tutor for rural MP students. Answer in "
-        + ("Hindi (Devanagari)" if lang == "hi" else "Hinglish (Roman Hindi)" if lang == "hinglish" else "simple English")
-        + ", under 80 words, one small example. Plain text, no markdown."
-    )
-    payload = json.dumps({"contents": [{"parts": [{"text": sys + "\nStudent: " + question}]}]}).encode()
+    sys = _sarthi_system(lang)
+    payload = json.dumps({"contents": [{"parts": [{"text": sys + "\n\nStudent question: " + question}]}]}).encode()
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_KEY}"
     try:
         req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
@@ -151,6 +188,15 @@ def _gemini_answer(question: str, lang: str) -> str | None:
         return None
 
 
+def _keyword_answer(question: str, lang: str) -> str | None:
+    """Offline keyword fallback. Used only when the LLM is unreachable."""
+    q = question.lower()
+    for d in DOUBTS:
+        if any(k in q for k in d["keys"]):
+            return pick(d["answer"], lang)
+    return None
+
+
 @app.get("/api/doubt/status")
 def doubt_status():
     return {"llm": bool(GEMINI_KEY), "model": GEMINI_MODEL, "mode": "gemini" if GEMINI_KEY else "offline"}
@@ -158,13 +204,17 @@ def doubt_status():
 
 @app.post("/api/doubt")
 def doubt(body: DoubtIn):
-    q = body.question.lower()
-    for d in DOUBTS:
-        if any(k in q for k in d["keys"]):
-            return {"answer": pick(d["answer"], body.lang), "matched": True, "source": "offline"}
+    """LLM-first: try Gemini, fall back to keywords only when offline.
+
+    The keyword answers double as grounding sources inside the system
+    prompt, so primary and fallback answers agree.
+    """
     ai = _gemini_answer(body.question, body.lang)
     if ai:
         return {"answer": ai, "matched": True, "source": "gemini"}
+    kw = _keyword_answer(body.question, body.lang)
+    if kw:
+        return {"answer": kw, "matched": True, "source": "offline"}
     fallback = {
         "hi": "अच्छा सवाल है! इसका जवाब मैं अभी सीख रहा हूँ। तब तक अपना सवाल अपने शिक्षक से पूछो, या कोर्स लेसन देखो।",
         "en": "Good question! I am still learning this answer. Meanwhile ask your teacher, or check the course lessons.",

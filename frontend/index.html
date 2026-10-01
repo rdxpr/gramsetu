@@ -45,7 +45,9 @@ h1 .it{font-style:italic;color:var(--leaf-deep)}
 .hero-art{background:var(--leaf-deep);border-radius:20px;color:#fff;padding:20px}
 .hero-art h4{margin:0;font-size:15px}
 .hero-art .sub2{opacity:.75;font-size:13px;margin:2px 0 12px}
-.demo-row{display:flex;gap:10px;align-items:center;background:#fffdf6;color:#20301f;border-radius:12px;padding:10px 12px;margin:8px 0}
+.demo-row{display:flex;gap:10px;align-items:center;background:#fffdf6;color:#20301f;border-radius:12px;padding:10px 12px;margin:8px 0;border:0;width:100%;font:inherit;text-align:left;cursor:pointer}
+.demo-row:hover{outline:2px solid var(--sun)}
+.demo-row:active{transform:scale(.99)}
 .demo-play{flex:0 0 30px;width:30px;height:30px;border-radius:50%;background:var(--leaf);color:#fff;display:grid;place-items:center;font-size:13px}
 .demo-row small{display:block;color:#5c6b58;font-size:12px}
 .demo-row b{font-size:14px}
@@ -161,8 +163,8 @@ summary{font-weight:700;cursor:pointer}
     <div class="hero-art">
       <h4 data-t="demoH">Sarthi live demo</h4>
       <div class="sub2" data-t="demoS">Bolo ya likho, jawab turant</div>
-      <div class="demo-row"><span class="demo-play">▶</span><span><small data-t="demo1a">Physics, Class 12</small><b data-t="demo1b">Gati kya hai? Jab vastu jagah badle...</b></span></div>
-      <div class="demo-row"><span class="demo-play">▶</span><span><small data-t="demo2a">Scholarship</small><b data-t="demo2b">MMVY: 12th me 70% + aay 6L tak, poori fees</b></span></div>
+      <button class="demo-row" onclick="tryDemo(this)"><span class="demo-play">▶</span><span><small data-t="demo1a">Physics, Class 12</small><b data-t="demo1b">Gati kya hai? Jab vastu jagah badle...</b></span></button>
+      <button class="demo-row" onclick="tryDemo(this)"><span class="demo-play">▶</span><span><small data-t="demo2a">Scholarship</small><b data-t="demo2b">MMVY: 12th me 70% + aay 6L tak, poori fees</b></span></button>
       <div class="voicebar"><input id="heroQ" placeholder="Sawal bolo ya likho..."><button class="mic" onclick="micHero()" title="Bolo">🎙</button><button class="send" onclick="askHero()" title="Puchho">➤</button></div>
       <div class="hero-answ" id="heroA" style="display:none"></div>
     </div>
@@ -398,8 +400,9 @@ async function askDoubt(){
  const box=document.getElementById("doubtA");box.style.display="block";box.textContent="Sarthi soch raha hai...";
  try{const d=await jpost("/api/doubt",{question:q,lang:LANG});lastAnswer=d.answer;box.innerHTML="";const src=document.createElement("div");src.className="meta";src.textContent=d.source==="gemini"?"AI jawab (Gemini)":"Offline jawab";box.appendChild(src);const p=document.createElement("div");p.textContent=d.answer;box.appendChild(p);document.getElementById("hearBtn").style.display="inline-block"}catch(e){box.textContent="Server se sampark nahi ho raha."}
 }
+async function tryDemo(el){const q=el.querySelector("b").textContent;document.getElementById("heroQ").value=q;askHero()}
 async function askHero(){const q=document.getElementById("heroQ").value.trim()||"Newton ka niyam kya hai?";
- try{const d=await jpost("/api/doubt",{question:q,lang:LANG});const h=document.getElementById("heroA");h.style.display="block";h.textContent=d.answer}catch(e){}}
+ try{const d=await jpost("/api/doubt",{question:q,lang:LANG});const h=document.getElementById("heroA");h.style.display="block";h.textContent=(d.source==="gemini"?"AI · ":"Offline · ")+d.answer}catch(e){}}
 function micHero(){document.getElementById("doubtQ").value=document.getElementById("heroQ").value;go("saarthi");speak()}
 function speak(){
  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
